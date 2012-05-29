@@ -1,0 +1,42 @@
+<project basedir="." name="Test Automation">
+    <property name="src.dir" value="${basedir}/src"/>
+    <property name="lib.dir" value="${basedir}/lib"/>
+    <property name="classes.dir" value="${basedir}/classes"/>
+    <property name="build.dir" value="${basedir}/build"/>
+    <property name="selrunner.jar" value="${build.dir}/selrunner.jar"/>
+
+    <path id="testautomation.classpath">
+        <file file="${selrunner.jar}"/>
+        <fileset dir="${lib.dir}">
+            <include name="*.jar" />
+        </fileset>
+    </path>
+
+    <target name="clean" description="cleans build output">
+        <delete dir="${classes.dir}" quiet="true" includeemptydirs="true"/>
+        <delete dir="${build.dir}" quiet="true" includeemptydirs="true"/>
+    </target>
+
+    <!--target name="resources">
+        <copy todir="${classes.dir}">
+            <fileset dir="${resources.dir}"/>
+        </copy>
+    </target-->
+
+    <target name="build" description="sets up the environment for test execution">
+        <mkdir dir="${classes.dir}"/>
+        <mkdir dir="${build.dir}"/>
+        <javac debug="true"
+               srcdir="${src.dir}"
+               destdir="${classes.dir}"
+               includeAntRuntime="false"
+               classpathref="testautomation.classpath"/>
+        <jar basedir="${classes.dir}" jarfile="${selrunner.jar}"/>
+    </target>
+
+    <target name="run-example" description="run command-line example">
+        <java classname="${example}"
+                failonerror="true"
+                classpathref="testautomation.classpath"/>
+    </target>
+</project>

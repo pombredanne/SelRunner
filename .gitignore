@@ -1,0 +1,16 @@
+# Folders
+research/
+built/
+build/
+classes/
+lib/
+bak/
+env/
+
+*.*~
+*~
+.coverage
+*.bak
+plot_error.log
+*.tar.gz
+fitnesse.jar

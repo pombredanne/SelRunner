@@ -1,11 +1,11 @@
-package selrunner;
+package org.testingsoftware.selrunner;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.openqa.selenium.remote.server.handler.BySelector;
 
-import selrunner.exceptions.ByConverterException;
+import org.testingsoftware.selrunner.exceptions.ByConverterException;
 import fitnesse.slim.Converter;
 
 public class ByConverter implements Converter {
@@ -13,7 +13,7 @@ public class ByConverter implements Converter {
 	private static final Pattern PATTERN = Pattern.compile("^(.+)\\:\\s*(.+)");
 	private static final BySelector BY_SELECTOR = new BySelector();
 
-	@Override
+	//@Override
 	public Object fromString(String byString) {
 		Matcher matcher = PATTERN.matcher(byString);
 		if (!matcher.matches()) {
@@ -24,7 +24,7 @@ public class ByConverter implements Converter {
 		return BY_SELECTOR.pickFrom(method, selector);
 	}
 
-	@Override
+	//@Override
 	public String toString(Object by) {
 		return by.toString();
 	}

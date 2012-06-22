@@ -1,4 +1,4 @@
-package selrunner.exceptions;
+package org.testingsoftware.selrunner.exceptions;
 
 public class ByConverterException extends RuntimeException {
 

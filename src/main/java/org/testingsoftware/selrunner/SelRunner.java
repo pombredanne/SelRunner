@@ -1,4 +1,4 @@
-package selrunner;
+package org.testingsoftware.selrunner;
 
 import org.apache.commons.lang.StringUtils;
 

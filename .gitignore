@@ -6,6 +6,7 @@ classes/
 lib/
 bak/
 env/
+target/
 
 *.*~
 *~
@@ -14,3 +15,6 @@ env/
 plot_error.log
 *.tar.gz
 fitnesse.jar
+.classpath
+.project
+.settings

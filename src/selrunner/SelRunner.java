@@ -54,6 +54,14 @@ public class SelRunner {
             "The Hitchhickers Guide");
     }
 
+    public String title() {
+        return getTitle();
+    }
+
+    public String getTitle() {
+        return webdriver.getTitle();
+    }
+
     public void stop() {
         webdriver.close();
     }

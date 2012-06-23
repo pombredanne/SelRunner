@@ -13,6 +13,7 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.support.ui.Select;
+import org.testingsoftware.selrunner.exceptions.NoWebElementSelectedException;
 
 import fitnesse.slim.converters.ConverterRegistry;
 //import fitnesse.slim.Slim;
@@ -50,16 +51,18 @@ public class SelRunner {
     }
 
     public void click() {
-        // click link
-        //webdriver.findElement(By.linkText("SelRunner")).click();
         element.click();
     }
 
     public void click(By by) {
-        webdriver.findElement(by).click();
+        element = webdriver.findElement(by);
+        click();
     }
 
 	public boolean containsText(String text) {
+		if (element == null) {
+			throw new NoWebElementSelectedException();
+		}
 		return element.getText().contains(text);
 	}
 

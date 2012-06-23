@@ -1,7 +1,7 @@
 !|script                                                            |
 |start         |sel runner                                          |
 |open          |http://adam.goucher.ca/parkcalc/                    |
-|check         |title              |Parking Calculator              |
+|check         |title            |Parking Calculator                |
 |find element  |id:Lot                                              |
 |select by text|Economy Parking                                     |
 |find element  |id:EntryTime                                        |
@@ -22,4 +22,5 @@
 |type          |03/01/2000                                          |
 |send key      |ENTER                                               |
 |find element  |tag name:body                                       |
-|ensure        |contains text     |(1 Days, 23 Hours, 11 Minutes)   |
+|ensure        |contains text    |(1 Days, 23 Hours, 11 Minutes)    |
+|stop                                                               |

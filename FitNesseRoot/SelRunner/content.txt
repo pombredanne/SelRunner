@@ -1,1 +1,7 @@
+!define TEST_SYSTEM {slim}
+
+!path /home/mark/devel/SelRunner/target/*.jar
+!path /home/mark/devel/SelRunner/target/lib/*.jar
+
+
 !contents -R2 -g -p -f -h

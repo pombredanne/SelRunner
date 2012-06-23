@@ -1,0 +1,23 @@
+!2 Scenarios help to express the intention of a test and improve maintainability.
+!|script                                            |
+|start                     |sel runner              |
+|Start Parking Calculator                           |
+|Select Economy Parking Lot                         |
+|Set Entry Time 01:23 AM                            |
+|Set Entry Date 02/28/2000                          |
+|Set Exit Time 12:34 AM                             |
+|Set Exit Date 03/01/2000                           |
+|Calculate Cost                                     |
+|The time difference is 1 Days, 23 Hours, 11 Minutes|
+|The cost is               |$ 18.00                 |
+|stop                                               |
+
+
+!2 If you are going to do a lot of variations you want to use the scenarios within decision tables.
+!|Parking from at to at takes and costs                                                                   |
+|Lot type                 |Entry Time|Entry Date|Exit Time|Exit Date |Time Difference             |Cost   |
+|Economy Parking          |01:23 AM  |02/28/2000|12:34 AM |03/01/2000|1 Days, 23 Hours, 11 Minutes|$ 18.00|
+|Economy Parking          |11:30 AM  |02/28/2000|12:34 PM |02/28/2000|0 Days, 1 Hours, 4 Minutes  |$ 8.00 |
+|Short-Term Parking       |11:30 AM  |02/28/2000|12:34 PM |02/28/2000|0 Days, 1 Hours, 4 Minutes  |$ 3.00 |
+|Long-Term Surface Parking|11:30 AM  |02/28/2000|12:34 PM |02/28/2000|0 Days, 1 Hours, 4 Minutes  |$ 4.00 |
+|Valet Parking            |11:30 AM  |02/28/2000|12:34 PM |02/28/2000|0 Days, 1 Hours, 4 Minutes  |$ 12.00|

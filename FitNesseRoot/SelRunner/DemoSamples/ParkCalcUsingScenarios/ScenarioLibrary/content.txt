@@ -1,0 +1,48 @@
+!|scenario|Start Parking Calculator        |
+|open     |http://adam.goucher.ca/parkcalc/|
+|check    |title    |Parking Calculator    |
+
+!|scenario     |Select _ Lot|name|
+|find element  |id:Lot           |
+|select by text|@name            |
+
+!|scenario   |Page contains|text         |
+|find element|tag name:body              |
+|check       |text         |=~/.*@text.*/|
+
+!|scenario   |Set _ Time _ _             |type,time,ampm             |
+|find element|id:@typeTime                                           |
+|clear                                                               |
+|type        |@time                                                  |
+|find element|xpath://input[@name='@typeTimeAMPM' and @value='@ampm']|
+|set selected                                                        |
+
+!|scenario   |Set _ Date _|type,date|
+|find element|id:@typeDate          |
+|clear                              |
+|type        |@date                 |
+
+!|scenario   |Calculate Cost|
+|find element|name:Submit   |
+|click                      |
+
+!|scenario   |The time difference is _      |difference        |
+|find element|xpath://tr[contains(td[1], 'COST')]/td[2]/span[2]|
+|ensure      |contains text                 |(@difference)     |
+
+!|scenario   |The cost is _               |cost                |
+|find element|xpath://tr[contains(td[1], 'COST')]/td[2]/span[1]|
+|check       |text                        |@cost               |
+
+!|scenario|Parking _ from _ at _ to _ at _ takes _ and costs _|Lot type,Entry Time,Entry Date,Exit Time,Exit Date,Time Difference,Cost|
+|start    |sel runner                                                                                                                 |
+|Start Parking Calculator                                                                                                             |
+|Select @LotType Lot                                                                                                                  |
+|Set Entry Time @EntryTime                                                                                                            |
+|Set Entry Date @EntryDate                                                                                                            |
+|Set Exit Time  @ExitTime                                                                                                             |
+|Set Exit Date @ExitDate                                                                                                              |
+|Calculate Cost                                                                                                                       |
+|The time difference is @TimeDifference                                                                                               |
+|The cost is @Cost                                                                                                                    |
+|stop                                                                                                                                 |

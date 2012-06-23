@@ -1,0 +1,25 @@
+!|script                                                            |
+|start         |sel runner                                          |
+|open          |http://adam.goucher.ca/parkcalc/                    |
+|check         |title              |Parking Calculator              |
+|find element  |id:Lot                                              |
+|select by text|Economy Parking                                     |
+|find element  |id:EntryTime                                        |
+|clear                                                              |
+|type          |01:23                                               |
+|find element  |xpath://input[@name='EntryTimeAMPM' and @value='AM']|
+|set selected                                                       |
+|find element  |id:EntryDate                                        |
+|clear                                                              |
+|type          |02/28/2000                                          |
+|find element  |id:ExitTime                                         |
+|clear                                                              |
+|type          |12:34                                               |
+|find element  |xpath://input[@name='ExitTimeAMPM' and @value='AM'] |
+|set selected                                                       |
+|find element  |id:ExitDate                                         |
+|clear                                                              |
+|type          |03/01/2000                                          |
+|send key      |ENTER                                               |
+|find element  |tag name:body                                       |
+|ensure        |contains text     |(1 Days, 23 Hours, 11 Minutes)   |

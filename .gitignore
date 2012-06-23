@@ -7,6 +7,12 @@ lib/
 bak/
 env/
 target/
+FitNesseRoot/ErrorLogs/
+FitNesseRoot/FitNesse/
+FitNesseRoot/PageFooter/
+FitNesseRoot/PageHeader/
+FitNesseRoot/RecentChanges/
+FitNesseRoot/files/
 
 *.*~
 *~
@@ -18,3 +24,6 @@ fitnesse.jar
 .classpath
 .project
 .settings
+FitNesseRoot/properties
+FitNesseRoot/updateDoNotCopyOverList
+FitNesseRoot/updateList

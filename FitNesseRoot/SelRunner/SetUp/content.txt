@@ -1,4 +1,5 @@
 !define BROWSER {Firefox}
+!define FILES_URL {http://localhost:8080/files/}
 
 |import                       |
 |org.testingsoftware.selrunner|

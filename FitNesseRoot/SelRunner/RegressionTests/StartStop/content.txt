@@ -1,0 +1,7 @@
+!|script                               |
+|start |sel runner                     |
+|open  |http://localhost:8080/FrontPage|
+|click |link text:SelRunner            |
+|find element|tag name:body|
+|ensure|contains text   |Demo Samples  |
+|stop                                  |

@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -15,27 +16,30 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.support.ui.Select;
 import org.testingsoftware.selrunner.exceptions.NoWebElementSelectedException;
 
+import com.google.common.base.Function;
+
 import fitnesse.slim.converters.ConverterRegistry;
 //import fitnesse.slim.Slim;
 
 /**
- * Simple Webdriver adapter intended for Slim use.
+ * Simple Webdriver adapter intended to be used with Fitnesse/Slim.
  *
  */
 public class SelRunner {
     private static WebDriver webdriver;
-    private static Wait<WebDriver> wait;
+    //private static Wait<WebDriver> wait;
 	private WebElement element;
+	private int timeout = 45;
 
     public SelRunner() {
         webdriver = new FirefoxDriver();
-        wait = new WebDriverWait(webdriver, 30);
+        //wait = new WebDriverWait(webdriver, 30);
         ConverterRegistry.addConverter(By.class, new ByConverter());
     }
 
     public SelRunner(String browserType) {
         webdriver = setBrowser(browserType);
-        wait = new WebDriverWait(webdriver, 30);
+        //wait = new WebDriverWait(webdriver, 30);
     }
 
     private FirefoxDriver setBrowser(String browserType) {
@@ -142,6 +146,91 @@ public class SelRunner {
 		}
 	}	
 
+	public void setTimeout(int seconds) {
+		timeout = seconds;
+	}
+
+	public void wait(int milliseconds) throws Exception {
+		Thread.sleep(milliseconds);
+	}
+
+	public void waitForElementVisible(By by) {
+		doWait().until(elementVisible(by));
+	}
+
+	public void waitForElementInvisible(By by) {
+		doWait().until(elementInvisible(by));
+	}
+
+	public void waitForElementPresent(By by) {
+		doWait().until(elementLocatedIsPresent(by));
+	}
+
+	public void waitForElementNotPresent(By by) {
+		doWait().until(elementLocatedIsNotPresent(by));
+	}
+
+	public void waitForCondition(String javascript) {
+		doWait().until(condition("return (" + javascript + ");"));
+	}
+
+	private WebDriverWait doWait() {
+		return new WebDriverWait(webdriver, timeout);
+	}
+
+	private Function<WebDriver, Object> condition(final String javascript) {
+		// wait until Javascript snippet evaluates to true
+		return new Function<WebDriver, Object>() {
+			public Object apply(WebDriver driver) {
+				return ((JavascriptExecutor) driver).executeScript(javascript);
+			}
+		};
+	}	
+
+	public boolean isDisplayed() {
+		return element.isDisplayed();
+	}
+	
+	private Function<WebDriver, Boolean> elementLocatedIsPresent(final By by) {
+		return new Function<WebDriver, Boolean>() {
+			public Boolean apply(WebDriver driver) {
+				return driver.findElements(by).size() > 0;
+			}
+		};
+	}
+
+	private Function<WebDriver, Boolean> elementLocatedIsNotPresent(final By by) {
+		return new Function<WebDriver, Boolean>() {
+			public Boolean apply(WebDriver driver) {
+				return driver.findElements(by).size() == 0;
+			}
+		};
+	}
+
+	private Function<WebDriver, Boolean> elementVisible(final By by) {
+		return new Function<WebDriver, Boolean>() {
+			public Boolean apply(WebDriver driver) {
+				if (driver.findElements(by).size() == 0) {
+					return false;
+				}
+				WebElement element = driver.findElement(by);
+				return element.isDisplayed();
+			}
+		};
+	}
+
+	private Function<WebDriver, Boolean> elementInvisible(final By by) {
+		return new Function<WebDriver, Boolean>() {
+			public Boolean apply(WebDriver driver) {
+				if (driver.findElements(by).size() == 0) {
+					return true;
+				}
+				WebElement element = driver.findElement(by);
+				return !element.isDisplayed();
+			}
+		};
+	}
+	
 	public void stop() {
         webdriver.close();
     }

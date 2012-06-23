@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html>
+<head><title>Delays With Ajax</title>
+<script type="text/javascript">
+var delay = 1000
+function byId(id) { return document.getElementById(id); }
+function changeTitle(){ document.title = byId("newTitle").value;}
+function changeText(){ byId("textUnderChange").value = document.getElementById("newText").value;}
+function changeOption(){ byId("optionUnderChange").selectedIndex = document.getElementById("newOption").selectedIndex;}
+function setDelay(d){ delay = Number(d); }
+function addInner(inner){ byId('divToAddTextTo').innerHTML += inner; }
+function makeVisible(){ byId('visibilityUnderChange').style.display = 'block'; }
+function makeInvisible(){ byId('visibilityUnderChange').style.display = 'none'; }
+var texts = 0
+var radios = 0
+var divs = 0
+var buttons = 0
+function addText(){
+  addInner("<input type='text' id='text"+texts+"' value='green"+texts+"' style='background:#FF8080'/><br/>"); texts += 1;
+}
+function addRadio(){
+ addInner("<input type='radio' name='colour' id='radio"+radios+"' value='green'/><div style='color:#00FF00'>Green "+radios+"</div><br/>"); radios += 1;
+}
+function addDiv(){
+  addInner("<div id='aDiv"+divs+"' style='background:#8080FF'>Blue skies "+divs+"</div><br/>"); divs += 1;
+}
+function addButton(){
+  addInner("<input type='button' style='background:#808000' id='button"+buttons+"' value='Click to Remove Me "+buttons+"' onclick='removeButton(this.id)'/><br/>"); buttons += 1;
+}
+function removeButton(id){
+  function remove(){
+    var el = document.getElementById(id);
+    el.parentNode.removeChild(el);
+  }
+  setTimeout(remove, delay);
+}
+</script>
+</head>
+
+<body>
+<h1>Elements or Title Change after a Delay</h1>
+
+Taken from Rick Mugridge's examples for <i>SpiderFixture</i>, now used to demonstrate the according tests in <i>SlimWebDriver</i>.
+<p>
+This web page includes various examples of changes that can happen to a web page after a time delay. In general, such delays are likely to be due to ajax-style calls to the server.
+<p>
+This web page will be used to illustrate how to allow for such delays with web tests written with <i>SpiderFixture</i>/<i>SlimWebDriver</i>.
+<p>
+You can change the time delay to be used in the last section, section 5, below.
+
+<h2 style='background:#C0C0C0'>1. Title Changes after the Selected Delay</h2>
+
+Enter some text below and click the <b>Change Title After Delay</b> button. The title of the window will change after a delay. 
+<p>
+The delay is determined by the selection in the last section below. Try changing the delay to see the impact (you will need to change the text too).
+<p>
+Title: <input type='text' id='newTitle' value='New Title'/>
+<input type='button' id='changeTitle' value='Change Title After Delay' onclick="setTimeout('changeTitle()', delay)"/>
+
+<h2 style='background:#C0C0C0'>2. Text Changes after the Selected Delay</h2>
+
+Title: <input type='text' id='newText' value='New Text'/>
+<input type='button' id='changeText' value='Change Text Below After Delay' onclick="setTimeout('changeText()', delay)"/>
+
+<p>Text being changed:
+
+<input type='text' id='textUnderChange' value=''/>
+
+<h2 style='background:#C0C0C0'>3. Option Changes after the Selected Delay</h2>
+
+Option to Change to: <select id='newOption'><option id ='blue'>Blue</option><option id ='red'>Red</option></select>
+
+<input type='button' id='changeOption' value='Change Option Below After Delay' onclick="setTimeout('changeOption()', delay)"/>
+
+<p>Option being changed:
+
+<select id='optionUnderChange'><option id ='blue'>Blue</option><option id ='red'>Red</option></select>
+
+<h2 style='background:#C0C0C0'>3. Visibility Changes after the Selected Delay</h2>
+
+<input type='button' id='makeVisible' value='Make Text Below Visible After Delay' onclick="setTimeout('makeVisible()', delay)"/>
+
+<input type='button' id='makeInvisible' value='Make Text Below Invisible After Delay' onclick="setTimeout('makeInvisible()', delay)"/>
+
+<p>Text being made visible or invisible:
+
+<div id='visibilityUnderChange' style='color:#FF0000 display:block'>Red</div>
+
+<h2 style='background:#C0C0C0'>5. Element added after the Selected Delay</h2>
+
+<input type='button' id='addText' value='Add Text Element Below After Delay' onclick="setTimeout('addText()', delay)"/>
+<p>
+<input type='button' id='addRadio' value='Add Radio After Below Delay' onclick="setTimeout('addRadio()', delay)"/>
+<p>
+<input type='button' id='addDiv' value='Add Div After Below Delay' onclick="setTimeout('addDiv()', delay)"/>
+<p>
+<input type='button' id='addButton' value='Add Button After Below Delay' onclick="setTimeout('addButton()', delay)"/>
+
+<p>Additions occur below here:
+
+<div id='divToAddTextTo'></div>
+
+If you use fireBug, you'll be able to see that any added elements just above have unique IDs.
+
+<h2 style='background:#C0C0F0'>5. Delay Before any Change or Addition Above is Carried out (in millseconds)</h2>
+
+You can select the time delay to occur before changing or adding an element above:
+<p>
+<form>
+    <input type="radio" value="0" name="delay" onclick='setDelay(this.value)'/>0
+    <input type="radio" value="100" name="delay" onclick='setDelay(this.value)'/>100
+    <input type="radio" value="1000" name="delay" checked onclick='setDelay(this.value)'/>1000
+    <input type="radio" value="5000" name="delay" onclick='setDelay(this.value)'/>5,000 milliseconds
+</form>
+
+</body></html>

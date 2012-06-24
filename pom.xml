@@ -13,7 +13,6 @@
   <packaging>jar</packaging>
 
   <properties>
-    <fitnesse.runtime.workingDirectory>${project.basedir}</fitnesse.runtime.workingDirectory>
     <fitnesse.runtime.daysToKeepVersions>0</fitnesse.runtime.daysToKeepVersions>
     <fitnesse.runtime.port>8080</fitnesse.runtime.port>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -58,32 +57,13 @@
             <argument>-classpath</argument>
             <classpath/>
             <argument>fitnesseMain.FitNesseMain</argument>
-            <argument>-d</argument><argument>${fitnesse.runtime.workingDirectory}</argument>
+            <argument>-d</argument><argument>${project.basedir}</argument>
             <argument>-e</argument><argument>${fitnesse.runtime.daysToKeepVersions}</argument>
             <argument>-p</argument><argument>${fitnesse.runtime.port}</argument>
           </arguments>
         </configuration>
 
       </plugin>
-      <!--  <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-dependency-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>copy-dependencies</id>
-            <phase>package</phase>
-            <goals>
-              <goal>copy-dependencies</goal>
-            </goals>
-            <configuration>
-              <outputDirectory>${project.build.directory}/lib</outputDirectory>
-              <overWriteReleases>false</overWriteReleases>
-              <overWriteSnapshots>true</overWriteSnapshots>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin> -->
-
     </plugins>
   </build>
 

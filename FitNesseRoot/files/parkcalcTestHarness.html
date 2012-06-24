@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<!-- idea and layout from original version at http://adam.goucher.ca/parkcalc/ -->
+<html>
+<head><title>ParkCalc Javascript Test Harness</title>
+  <link href="parkcalc_files/style.css" rel="stylesheet" type="text/css">
+  <script language="JavaScript" type="text/JavaScript" src="parkcalc_files/datetimepicker.js"></script>
+  <script type="text/javascript">
+  var delay = 0;
+  var setDelay = function(d) { delay = Number(d); };
+  var byId = function(id) { return document.getElementById(id); };
+  var calculate = function(){ byId('cost').innerHTML = '$ 100'; };
+
+  </script>
+</head>
+
+<body bgcolor="#FFFFFF" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+  <p align="left" class="PageTitle">PARKING CALCULATOR<br><img src="parkcalc_files/spacer.gif" width="555" height="1"></p>
+  <form name="Calculator" method="get" action="index.php?action=calculate">
+    <table width="545" border="1" cellpadding="3" cellspacing="0" bordercolor="#CCCCCC">
+      <tr>
+        <td width="201" class="BodyCopy">Choose a Lot </td>
+        <td width="326" bgcolor="#00306C" class="BodyCopy"><select name="Lot" size="1" id="Lot">
+          <option value="STP" selected>Short-Term Parking</option>
+          <option value="EP" >Economy Parking</option>
+          <option value="LTS" >Long-Term Surface Parking</option>
+          <option value="LTG" >Long-Term Garage Parking</option>
+          <option value="VP" >Valet Parking</option>
+        </select></td>
+      </tr>
+      <tr>
+        <td width="201" class="BodyCopy">Choose Entry Date and Time </td>
+        <td width="326" bgcolor="#00306C" class="BodyCopy">
+          <font color="#FFFFFF">
+            <input name="EntryTime" type="text" id="EntryTime" value="12:00" size="10">
+            <input name="EntryTimeAMPM" type="radio" value="AM" checked>AM
+            <input name="EntryTimeAMPM" type="radio" value="PM" >PM
+            <input name="EntryDate" type="text" id="EntryDate" value="MM/DD/YYYY" size="15">
+            <a href="javascript:NewCal('EntryDate','mmddyyyy',false,24)"><img src="parkcalc_files/cal.gif" width="16" height="16" border="0" alt="Pick a date"></a>
+          </font>
+        </td>
+      </tr>
+      <tr>
+        <td width="201" class="BodyCopy">Choose Leaving Date and Time</td>
+        <td width="326" bgcolor="#00306C" class="BodyCopy">
+          <font color="#FFFFFF">
+            <input name="ExitTime" type="text" id="ExitTime" value="12:00" size="10">
+            <input name="ExitTimeAMPM" type="radio" value="AM" checked>AM
+            <input name="ExitTimeAMPM" type="radio" value="PM" >PM
+            <input name="ExitDate" type="text" id="ExitDate" value="MM/DD/YYYY" size="15">
+            <a href="javascript:NewCal('ExitDate','mmddyyyy',false,24)"><img src="parkcalc_files/cal.gif" width="16" height="16" border="0" alt="Pick a date"></a>
+          </font>
+        </td>
+      </tr>
+      <tr>
+        <td width="201" class="BodyCopy"><div align="right" class="SubHead">COST</div></td>
+        <td width='325' bgcolor='#00306C'><span class='SubHead'><font color='#FFFFFF'><b id='cost'>$ 0</b></font></span></td>                </tr>
+      </table>
+      <input type='button' id='calculate' value='Calculate' onclick="setTimeout('calculate()', delay)"/>
+
+    </form>
+
+    <br>
+    <p align="left" class="BodyCopy">Response delayed by:</p>
+
+
+    <form class="BodyCopy">
+      <input type="radio" value="0" name="delay" onclick='setDelay(this.value)'/>0
+      <input type="radio" value="100" name="delay" onclick='setDelay(this.value)'/>100
+      <input type="radio" value="1000" name="delay" checked onclick='setDelay(this.value)'/>1000
+      <input type="radio" value="5000" name="delay" onclick='setDelay(this.value)'/>5,000 milliseconds
+    </form>
+
+  </body></html>

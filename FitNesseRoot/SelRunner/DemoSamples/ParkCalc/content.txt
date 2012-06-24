@@ -1,26 +1,24 @@
-!|script                                                            |
-|start         |sel runner                                          |
-|open          |http://adam.goucher.ca/parkcalc/                    |
-|check         |title            |Parking Calculator                |
-|find element  |id:Lot                                              |
-|select by text|Economy Parking                                     |
-|find element  |id:EntryTime                                        |
-|clear                                                              |
-|type          |01:23                                               |
-|find element  |xpath://input[@name='EntryTimeAMPM' and @value='AM']|
-|set selected                                                       |
-|find element  |id:EntryDate                                        |
-|clear                                                              |
-|type          |02/28/2000                                          |
-|find element  |id:ExitTime                                         |
-|clear                                                              |
-|type          |12:34                                               |
-|find element  |xpath://input[@name='ExitTimeAMPM' and @value='AM'] |
-|set selected                                                       |
-|find element  |id:ExitDate                                         |
-|clear                                                              |
-|type          |03/01/2000                                          |
-|send key      |ENTER                                               |
-|find element  |tag name:body                                       |
-|ensure        |contains text    |(1 Days, 23 Hours, 11 Minutes)    |
-|stop                                                               |
+!|script                                                      |
+|start         |sel runner                                    |
+|open          |${FILES_URL}parkcalcTestHarness.html          |
+|check         |title        |ParkCalc Javascript Test Harness|
+|find element  |id:Lot                                        |
+|select by text|Economy Parking                               |
+|find element  |id:EntryTime                                  |
+|clear                                                        |
+|type          |01:23                                         |
+|find element  |id:EntryDate                                  |
+|clear                                                        |
+|type          |2000-02-28                                    |
+|find element  |id:ExitTime                                   |
+|clear                                                        |
+|type          |00:34                                         |
+|find element  |id:ExitDate                                   |
+|clear                                                        |
+|type          |2000-03-01                                    |
+|find element  |id:calculate                                  |
+|click                                                        |
+|find element  |tag name:body                                 |
+|ensure        |contains text|(1 DAYS, 23 HOURS, 11 MINUTES)  |
+|ensure        |contains text|$ 18.00                         |
+|stop                                                         |

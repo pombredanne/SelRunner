@@ -1,6 +1,6 @@
-!|scenario|Start Parking Calculator        |
-|open     |http://adam.goucher.ca/parkcalc/|
-|check    |title    |Parking Calculator    |
+!|scenario|Start Parking Calculator                            |
+|open     |http://localhost:8080/files/parkcalcTestHarness.html|
+|check    |title       |ParkCalc Javascript Test Harness       |
 
 !|scenario     |Select _ Lot|name|
 |find element  |id:Lot           |
@@ -10,12 +10,10 @@
 |find element|tag name:body              |
 |check       |text         |=~/.*@text.*/|
 
-!|scenario   |Set _ Time _ _             |type,time,ampm             |
-|find element|id:@typeTime                                           |
-|clear                                                               |
-|type        |@time                                                  |
-|find element|xpath://input[@name='@typeTimeAMPM' and @value='@ampm']|
-|set selected                                                        |
+!|scenario   |Set _ Time _|type,time|
+|find element|id:@typeTime          |
+|clear                              |
+|type        |@time                 |
 
 !|scenario   |Set _ Date _|type,date|
 |find element|id:@typeDate          |
@@ -23,16 +21,16 @@
 |type        |@date                 |
 
 !|scenario   |Calculate Cost|
-|find element|name:Submit   |
+|find element|id:calculate  |
 |click                      |
 
-!|scenario   |The time difference is _      |difference        |
-|find element|xpath://tr[contains(td[1], 'COST')]/td[2]/span[2]|
-|ensure      |contains text                 |(@difference)     |
+!|scenario   |The time difference is _|difference   |
+|find element|tag name:body                         |
+|ensure      |contains text           |(@difference)|
 
-!|scenario   |The cost is _               |cost                |
-|find element|xpath://tr[contains(td[1], 'COST')]/td[2]/span[1]|
-|check       |text                        |@cost               |
+!|scenario   |The cost is _|cost |
+|find element|tag name:body      |
+|ensure      |contains text|@cost|
 
 !|scenario|Parking _ from _ at _ to _ at _ takes _ and costs _|Lot type,Entry Time,Entry Date,Exit Time,Exit Date,Time Difference,Cost|
 |start    |sel runner                                                                                                                 |

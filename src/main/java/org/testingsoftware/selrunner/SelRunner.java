@@ -77,6 +77,7 @@ public class SelRunner {
 		if (element == null) {
 			throw new NoWebElementSelectedException();
 		}
+		System.out.println(element.getText());
 		return element.getText().contains(text);
 	}
 

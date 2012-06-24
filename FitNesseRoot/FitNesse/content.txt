@@ -1,0 +1,31 @@
+|!c !2 Contents|
+|!contents -g|
+
+Note: this will use the classpath assembled by maven
+!path ${java.class.path}
+
+!path fitnesse.jar
+!path classes
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

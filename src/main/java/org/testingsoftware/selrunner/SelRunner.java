@@ -1,25 +1,22 @@
 package org.testingsoftware.selrunner;
 
+import java.net.MalformedURLException;
 import java.util.List;
-
-import org.apache.commons.lang.StringUtils;
+import com.google.common.base.Function;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.support.ui.Select;
 import org.testingsoftware.selrunner.exceptions.NoWebElementSelectedException;
 
-import com.google.common.base.Function;
-
 import fitnesse.slim.converters.ConverterRegistry;
-//import fitnesse.slim.Slim;
 
 /**
  * Simple Webdriver adapter intended to be used with Fitnesse/Slim.
@@ -27,32 +24,20 @@ import fitnesse.slim.converters.ConverterRegistry;
  */
 public class SelRunner {
     private static WebDriver webdriver;
-    //private static Wait<WebDriver> wait;
 	private WebElement element;
 	private int timeout = 45;
 
     public SelRunner() {
-        webdriver = new FirefoxDriver();
-        //wait = new WebDriverWait(webdriver, 30);
-        ConverterRegistry.addConverter(By.class, new ByConverter());
+        newDriver("Firefox");
     }
 
-    public SelRunner(String browserType) {
-        webdriver = setBrowser(browserType);
-        //wait = new WebDriverWait(webdriver, 30);
-    }
-
-    private FirefoxDriver setBrowser(String browserType) {
-        if (StringUtils.isEmpty(browserType)) {
-        }
-        return new FirefoxDriver();
-    }
-
-    public void open(String url) {
-        //System.out.println("url: " + url);
-
-        webdriver.get(url);
-    }
+	public SelRunner(String browserType) {
+		newDriver(browserType);
+	}
+	
+	public void clear() {
+		element.clear();
+	}
 
     public void click() {
         element.click();
@@ -63,6 +48,15 @@ public class SelRunner {
         click();
     }
 
+    private Function<WebDriver, Object> condition(final String javascript) {
+		// wait until Javascript snippet evaluates to true
+		return new Function<WebDriver, Object>() {
+			public Object apply(WebDriver driver) {
+				return ((JavascriptExecutor) driver).executeScript(javascript);
+			}
+		};
+	}
+
 	public boolean containsText(String text) {
 		if (element == null) {
 			throw new NoWebElementSelectedException();
@@ -70,153 +64,8 @@ public class SelRunner {
 		return element.getText().contains(text);
 	}
 
-	public boolean findElement(By by) {
-		if (hasElement(by)) {
-			element = webdriver.findElement(by);
-			return true;
-		}
-		return false;
-	}
-
-	public boolean hasElement(By by) {
-		return numberOfElements(by) > 0;
-	}
-
-	public int numberOfElements(By by) {
-		return findElements(by).size();
-	}
-	
-	public List<WebElement> findElements(By by) {
-		return webdriver.findElements(by);
-	}
-	
-    public String title() {
-        return webdriver.getTitle();
-    }
-
-	public void selectByValue(String value) {
-		new Select(element).selectByValue(value);
-	}
-
-	public void selectByText(String text) {
-		new Select(element).selectByVisibleText(text);
-	}
-	
-	public void selectByIndex(int index) {
-		new Select(element).selectByIndex(index);
-	}
-
-	public void clear() {
-		element.clear();
-	}	
-
-	public void type(String keys) {
-		element.sendKeys(keys);
-	}
-
-	public void sendKeys(CharSequence[] keys) {
-		element.sendKeys(keys);
-	}
-
-	public void sendKey(Keys key) {
-		element.sendKeys(key);
-	}
-	
-	public void toggle() {
-		element.click();
-	}
-
-	public String text() {
-		return element.getText();
-	}
-
-	public boolean isSelected() {
-		return element.isSelected();
-	}
-
-	public void setSelected() {
-		if (!isSelected()) {
-			toggle();
-		}
-	}	
-
-	public void setUnselected() {
-		if (isSelected()) {
-			toggle();
-		}
-	}	
-
-	public void setTimeout(int seconds) {
-		timeout = seconds;
-	}
-
-	public void wait(int milliseconds) throws Exception {
-		Thread.sleep(milliseconds);
-	}
-
-	public void waitForElementVisible(By by) {
-		doWait().until(elementVisible(by));
-	}
-
-	public void waitForElementInvisible(By by) {
-		doWait().until(elementInvisible(by));
-	}
-
-	public void waitForElementPresent(By by) {
-		doWait().until(elementLocatedIsPresent(by));
-	}
-
-	public void waitForElementNotPresent(By by) {
-		doWait().until(elementLocatedIsNotPresent(by));
-	}
-
-	public void waitForCondition(String javascript) {
-		doWait().until(condition("return (" + javascript + ");"));
-	}
-
 	private WebDriverWait doWait() {
 		return new WebDriverWait(webdriver, timeout);
-	}
-
-	private Function<WebDriver, Object> condition(final String javascript) {
-		// wait until Javascript snippet evaluates to true
-		return new Function<WebDriver, Object>() {
-			public Object apply(WebDriver driver) {
-				return ((JavascriptExecutor) driver).executeScript(javascript);
-			}
-		};
-	}	
-
-	public boolean isDisplayed() {
-		return element.isDisplayed();
-	}
-	
-	private Function<WebDriver, Boolean> elementLocatedIsPresent(final By by) {
-		return new Function<WebDriver, Boolean>() {
-			public Boolean apply(WebDriver driver) {
-				return driver.findElements(by).size() > 0;
-			}
-		};
-	}
-
-	private Function<WebDriver, Boolean> elementLocatedIsNotPresent(final By by) {
-		return new Function<WebDriver, Boolean>() {
-			public Boolean apply(WebDriver driver) {
-				return driver.findElements(by).size() == 0;
-			}
-		};
-	}
-
-	private Function<WebDriver, Boolean> elementVisible(final By by) {
-		return new Function<WebDriver, Boolean>() {
-			public Boolean apply(WebDriver driver) {
-				if (driver.findElements(by).size() == 0) {
-					return false;
-				}
-				WebElement element = driver.findElement(by);
-				return element.isDisplayed();
-			}
-		};
 	}
 
 	private Function<WebDriver, Boolean> elementInvisible(final By by) {
@@ -230,8 +79,156 @@ public class SelRunner {
 			}
 		};
 	}
+
+	private Function<WebDriver, Boolean> elementLocatedIsNotPresent(final By by) {
+		return new Function<WebDriver, Boolean>() {
+			public Boolean apply(WebDriver driver) {
+				return driver.findElements(by).size() == 0;
+			}
+		};
+	}
 	
+	private Function<WebDriver, Boolean> elementLocatedIsPresent(final By by) {
+		return new Function<WebDriver, Boolean>() {
+			public Boolean apply(WebDriver driver) {
+				return driver.findElements(by).size() > 0;
+			}
+		};
+	}
+	
+    private Function<WebDriver, Boolean> elementVisible(final By by) {
+		return new Function<WebDriver, Boolean>() {
+			public Boolean apply(WebDriver driver) {
+				if (driver.findElements(by).size() == 0) {
+					return false;
+				}
+				WebElement element = driver.findElement(by);
+				return element.isDisplayed();
+			}
+		};
+	}
+
+	public boolean findElement(By by) {
+		if (hasElement(by)) {
+			element = webdriver.findElement(by);
+			return true;
+		}
+		return false;
+	}
+
+	public List<WebElement> findElements(By by) {
+		return webdriver.findElements(by);
+	}
+	
+	public boolean hasElement(By by) {
+		return numberOfElements(by) > 0;
+	}
+
+	public boolean isDisplayed() {
+		return element.isDisplayed();
+	}	
+
+	public boolean isSelected() {
+		return element.isSelected();
+	}
+
+	private void newDriver(String browserType) {
+    	if (browserType.equals("Chrome")) {
+    		webdriver = new ChromeDriver();
+    	} else if (browserType.equals("IE")) {
+    		// I do not have IE available so please let me know if it works fine 
+    		webdriver = new InternetExplorerDriver();
+    	} else {
+    		webdriver = new FirefoxDriver();
+    	}
+        ConverterRegistry.addConverter(By.class, new ByConverter());
+	}
+
+	public int numberOfElements(By by) {
+		return findElements(by).size();
+	}
+	
+	public void open(String url) {
+        webdriver.get(url);
+    }
+
+	public void selectByIndex(int index) {
+		new Select(element).selectByIndex(index);
+	}
+
+	public void selectByText(String text) {
+		new Select(element).selectByVisibleText(text);
+	}
+
+	public void selectByValue(String value) {
+		new Select(element).selectByValue(value);
+	}	
+
+	public void sendKey(Keys key) {
+		element.sendKeys(key);
+	}	
+
+	public void sendKeys(CharSequence[] keys) {
+		element.sendKeys(keys);
+	}
+
+	public void setSelected() {
+		if (!isSelected()) {
+			toggle();
+		}
+	}
+
+	public void setTimeout(int seconds) {
+		timeout = seconds;
+	}
+
+	public void setUnselected() {
+		if (isSelected()) {
+			toggle();
+		}
+	}
+
 	public void stop() {
         webdriver.close();
     }
+
+	public String text() {
+		return element.getText();
+	}
+
+	public String title() {
+        return webdriver.getTitle();
+    }
+
+	public void toggle() {
+		element.click();
+	}
+
+	public void type(String keys) {
+		element.sendKeys(keys);
+	}	
+
+	public void wait(int milliseconds) throws Exception {
+		Thread.sleep(milliseconds);
+	}
+	
+	public void waitForCondition(String javascript) {
+		doWait().until(condition("return (" + javascript + ");"));
+	}
+
+	public void waitForElementInvisible(By by) {
+		doWait().until(elementInvisible(by));
+	}
+
+	public void waitForElementNotPresent(By by) {
+		doWait().until(elementLocatedIsNotPresent(by));
+	}
+
+	public void waitForElementPresent(By by) {
+		doWait().until(elementLocatedIsPresent(by));
+	}
+	
+	public void waitForElementVisible(By by) {
+		doWait().until(elementVisible(by));
+	}
 }

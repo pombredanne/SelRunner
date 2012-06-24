@@ -1,7 +1,9 @@
+!*> Environment settings for testrunner
+
 !define TEST_SYSTEM {slim}
 
-!path /home/mark/devel/SelRunner/target/*.jar
-!path /home/mark/devel/SelRunner/target/lib/*.jar
-
+We use the classpath assembled by maven
+!path ${java.class.path}
+*!
 
 !contents -R2 -g -p -f -h

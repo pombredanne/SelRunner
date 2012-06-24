@@ -27,3 +27,4 @@ fitnesse.jar
 FitNesseRoot/properties
 FitNesseRoot/updateDoNotCopyOverList
 FitNesseRoot/updateList
+chromedriver.log

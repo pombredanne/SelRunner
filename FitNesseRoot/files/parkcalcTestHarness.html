@@ -1,14 +1,95 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
 <!-- idea and layout from original version at http://adam.goucher.ca/parkcalc/ -->
 <html>
-<head><title>ParkCalc Javascript Test Harness</title>
+<head>
+  <title>ParkCalc Javascript Test Harness</title>
   <link href="parkcalc_files/style.css" rel="stylesheet" type="text/css">
   <script language="JavaScript" type="text/JavaScript" src="parkcalc_files/datetimepicker.js"></script>
   <script type="text/javascript">
   var delay = 0;
   var setDelay = function(d) { delay = Number(d); };
   var byId = function(id) { return document.getElementById(id); };
-  var calculate = function(){ byId('cost').innerHTML = '$ 100'; };
+  //var calculate = function() { byId('cost').innerHTML = '$ ' + delay; };
+  var calculate = function() { 
+    var entryDate = parseDate("01:00", "2010-01-01");
+    var exitDate = parseDate("02:01", "2010-01-02");
+    var costs = getCosts(byId('Lot').value, entryDate, exitDate);
+    var duration = getDuration(entryDate, exitDate);
+    byId('cost').innerHTML = "$ "  + costs + "</b></font></span><span class='BodyCopy'><font color='#FFFFFF'><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(" + duration[0] + " Days, " + duration[1] + " Hours, " + duration[2] + " Minutes)";
+  };
+
+  var parseDate = function(time, date) {
+    var time_parts = time.match(/(\d+)/g);
+    var date_parts = date.match(/(\d+)/g);
+    // new Date(year, month [, date [, hours[, minutes[, seconds[, ms]]]]])
+    return new Date(date_parts[0], date_parts[1]-1, date_parts[2],
+      time_parts[0], time_parts[1]); // months are 0-based
+  }
+
+  var getDuration = function(entryDate, exitDate) {
+    var elapsedTime = (exitDate.getTime() - entryDate.getTime())/1000;
+    var days = Math.floor(elapsedTime/3600/24);
+    var hours = Math.floor((elapsedTime - (days*86400))/3600);
+    var minutes = (elapsedTime - (days*86400) - (hours*3600))/60;
+    var weeks = Math.floor(days / 7);
+      
+    return [days, hours, minutes];
+  };
+
+  var getCosts = function(lot, entryDate, exitDate) {
+    if (lot === 'STP') {
+      return getSTPCosts(entryDate, exitDate);
+    } else if (lot === 'EP') {
+      return getEPCosts(entryDate, exitDate);
+    } else if (lot === 'LTS') {
+      return getLTSCosts(entryDate, exitDate);
+    } else if (lot === 'LTG') {
+      return getLTGCosts(entryDate, exitDate);
+    } else if (lot === 'VP') {
+      return getVPCosts(entryDate, exitDate);
+    }
+  }
+
+  var getSTPCosts = function(entryDate, exitDate) {
+    //SHORT TERM PARKING
+    var duration = getDuration(entryDate, exitDate);
+    var totalElapsedDays = duration[0];
+    var totalElapsedHours = duration[1];
+    var totalElapsedMinutes = duration[2];
+    var dayRateSTP = 24;
+    var firstHourRateSTP = 12;
+    var additionalHalfRateSTP = 1;
+    //var weeks = Math.floor(days / 7);
+    var grandTotal = 0;
+    
+    //Calculate Rate Per Day
+    if (totalElapsedHours >= 12){
+      totalElapsedDays += 1;
+    }
+    grandTotal = (Math.floor(totalElapsedDays) * dayRateSTP);
+    
+    //Calculate Rate Per First Hour
+    if (totalElapsedHours == 1 && totalElapsedMinutes == 0){
+      grandTotal = grandTotal + firstHourRateSTP;
+    }
+    if (totalElapsedHours == 0 && totalElapsedMinutes > 0 && totalElapsedMinutes < 60){
+      grandTotal = grandTotal + firstHourRateSTP;
+    }
+    
+    //Calculate Rate Per Extra Hour
+    if (totalElapsedHours > 1 && totalElapsedHours < 12){
+      if(totalElapsedMinutes == 0){
+        grandTotal = grandTotal + (totalElapsedHours * (2 * additionalHalfRateSTP));
+      }
+      if(totalElapsedMinutes > 0 && totalElapsedMinutes < 31){
+        grandTotal = grandTotal + (totalElapsedHours * (2 * additionalHalfRateSTP)) + additionalHalfRateSTP;
+      }
+      if(totalElapsedMinutes > 30 && totalElapsedMinutes < 60){
+        grandTotal = grandTotal + (totalElapsedHours * (2 * additionalHalfRateSTP)) + (2 * additionalHalfRateSTP);
+      }
+    }
+    return grandTotal.toFixed(2);
+  };
 
   </script>
 </head>
@@ -32,10 +113,10 @@
         <td width="326" bgcolor="#00306C" class="BodyCopy">
           <font color="#FFFFFF">
             <input name="EntryTime" type="text" id="EntryTime" value="12:00" size="10">
-            <input name="EntryTimeAMPM" type="radio" value="AM" checked>AM
-            <input name="EntryTimeAMPM" type="radio" value="PM" >PM
-            <input name="EntryDate" type="text" id="EntryDate" value="MM/DD/YYYY" size="15">
-            <a href="javascript:NewCal('EntryDate','mmddyyyy',false,24)"><img src="parkcalc_files/cal.gif" width="16" height="16" border="0" alt="Pick a date"></a>
+            <!--<input name="EntryTimeAMPM" type="radio" value="AM" checked>AM
+            <input name="EntryTimeAMPM" type="radio" value="PM" >PM-->
+            <input name="EntryDate" type="text" id="EntryDate" value="YYYY-MM-DD" size="15">
+            <a href="javascript:NewCal('EntryDate','yyyy-mm-dd',false,24)"><img src="parkcalc_files/cal.gif" width="16" height="16" border="0" alt="Pick a date"></a>
           </font>
         </td>
       </tr>
@@ -44,10 +125,10 @@
         <td width="326" bgcolor="#00306C" class="BodyCopy">
           <font color="#FFFFFF">
             <input name="ExitTime" type="text" id="ExitTime" value="12:00" size="10">
-            <input name="ExitTimeAMPM" type="radio" value="AM" checked>AM
-            <input name="ExitTimeAMPM" type="radio" value="PM" >PM
-            <input name="ExitDate" type="text" id="ExitDate" value="MM/DD/YYYY" size="15">
-            <a href="javascript:NewCal('ExitDate','mmddyyyy',false,24)"><img src="parkcalc_files/cal.gif" width="16" height="16" border="0" alt="Pick a date"></a>
+            <!--<input name="ExitTimeAMPM" type="radio" value="AM" checked>AM
+            <input name="ExitTimeAMPM" type="radio" value="PM" >PM -->
+            <input name="ExitDate" type="text" id="ExitDate" value="YYYY-MM-DD" size="15">
+            <a href="javascript:NewCal('ExitDate','yyyy-mm-dd',false,24)"><img src="parkcalc_files/cal.gif" width="16" height="16" border="0" alt="Pick a date"></a>
           </font>
         </td>
       </tr>
@@ -62,12 +143,16 @@
     <br>
     <p align="left" class="BodyCopy">Response delayed by:</p>
 
-
     <form class="BodyCopy">
-      <input type="radio" value="0" name="delay" onclick='setDelay(this.value)'/>0
-      <input type="radio" value="100" name="delay" onclick='setDelay(this.value)'/>100
-      <input type="radio" value="1000" name="delay" checked onclick='setDelay(this.value)'/>1000
-      <input type="radio" value="5000" name="delay" onclick='setDelay(this.value)'/>5,000 milliseconds
+      <input type="radio" value="0" name="delay" onclick=
+        'setDelay(this.value)'/>0
+      <input type="radio" value="100" name="delay" checked onclick=
+        'setDelay(this.value)'/>100
+      <input type="radio" value="1000" name="delay" onclick=
+        'setDelay(this.value)'/>1000
+      <input type="radio" value="5000" name="delay" onclick=
+        'setDelay(this.value)'/>5,000 milliseconds
     </form>
 
-  </body></html>
+  </body>
+</html>

@@ -212,8 +212,8 @@ public class SelRunner {
 		Thread.sleep(milliseconds);
 	}
 	
-	public void waitForCondition(String javascript) {
-		doWait().until(condition("return (" + javascript + ");"));
+	public void waitForCondition(String snippet) {
+		doWait().until(condition("return (" + snippet + ");"));
 	}
 
 	public void waitForElementInvisible(By by) {

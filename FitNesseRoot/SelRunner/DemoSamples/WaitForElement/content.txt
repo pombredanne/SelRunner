@@ -1,5 +1,6 @@
-If the System under Test makes use of Ajax technoloy you must wait until page elements are available.
+If the System under Test makes use of Ajax technoloy you will need means that make test execution wait for page elements to become available.
 
+!2 Configure Ajax Test Harness
 !|script                                           |
 |start            |sel runner                      |
 |set timeout      |10                              |

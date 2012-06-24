@@ -9,10 +9,11 @@
   var delay = 0;
   var setDelay = function(d) { delay = Number(d); };
   var byId = function(id) { return document.getElementById(id); };
-  //var calculate = function() { byId('cost').innerHTML = '$ ' + delay; };
   var calculate = function() { 
-    var entryDate = parseDate("01:00", "2010-01-01");
-    var exitDate = parseDate("02:01", "2010-01-02");
+    var entryDate = parseDate(byId('EntryTime').value, 
+      byId('EntryDate').value);
+    var exitDate = parseDate(byId('ExitTime').value, 
+      byId('ExitDate').value);
     var costs = getCosts(byId('Lot').value, entryDate, exitDate);
     var duration = getDuration(entryDate, exitDate);
     byId('cost').innerHTML = "$ "  + costs + "</b></font></span><span class='BodyCopy'><font color='#FFFFFF'><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(" + duration[0] + " Days, " + duration[1] + " Hours, " + duration[2] + " Minutes)";
@@ -31,7 +32,6 @@
     var days = Math.floor(elapsedTime/3600/24);
     var hours = Math.floor((elapsedTime - (days*86400))/3600);
     var minutes = (elapsedTime - (days*86400) - (hours*3600))/60;
-    var weeks = Math.floor(days / 7);
       
     return [days, hours, minutes];
   };
@@ -51,7 +51,7 @@
   }
 
   var getSTPCosts = function(entryDate, exitDate) {
-    //SHORT TERM PARKING
+    // SHORT TERM PARKING
     var duration = getDuration(entryDate, exitDate);
     var totalElapsedDays = duration[0];
     var totalElapsedHours = duration[1];
@@ -59,37 +59,183 @@
     var dayRateSTP = 24;
     var firstHourRateSTP = 12;
     var additionalHalfRateSTP = 1;
-    //var weeks = Math.floor(days / 7);
-    var grandTotal = 0;
+    var total = 0;
     
-    //Calculate Rate Per Day
-    if (totalElapsedHours >= 12){
+    // Calculate Rate Per Day
+    if (totalElapsedHours >= 12) {
       totalElapsedDays += 1;
     }
-    grandTotal = (Math.floor(totalElapsedDays) * dayRateSTP);
+    total = (Math.floor(totalElapsedDays) * dayRateSTP);
     
-    //Calculate Rate Per First Hour
-    if (totalElapsedHours == 1 && totalElapsedMinutes == 0){
-      grandTotal = grandTotal + firstHourRateSTP;
+    // Calculate Rate Per First Hour
+    if (totalElapsedHours == 1 && totalElapsedMinutes == 0) {
+      total = total + firstHourRateSTP;
     }
-    if (totalElapsedHours == 0 && totalElapsedMinutes > 0 && totalElapsedMinutes < 60){
-      grandTotal = grandTotal + firstHourRateSTP;
+    if (totalElapsedHours == 0 && totalElapsedMinutes > 0 && totalElapsedMinutes < 60) {
+      total = total + firstHourRateSTP;
     }
     
-    //Calculate Rate Per Extra Hour
-    if (totalElapsedHours > 1 && totalElapsedHours < 12){
-      if(totalElapsedMinutes == 0){
-        grandTotal = grandTotal + (totalElapsedHours * (2 * additionalHalfRateSTP));
+    // Calculate Rate Per Extra Hour
+    if (totalElapsedHours > 1 && totalElapsedHours < 12) {
+      if(totalElapsedMinutes == 0) {
+        total = total + (totalElapsedHours * (2 * additionalHalfRateSTP));
       }
-      if(totalElapsedMinutes > 0 && totalElapsedMinutes < 31){
-        grandTotal = grandTotal + (totalElapsedHours * (2 * additionalHalfRateSTP)) + additionalHalfRateSTP;
+      if(totalElapsedMinutes > 0 && totalElapsedMinutes < 31) {
+        total = total + (totalElapsedHours * (2 * additionalHalfRateSTP)) + additionalHalfRateSTP;
       }
-      if(totalElapsedMinutes > 30 && totalElapsedMinutes < 60){
-        grandTotal = grandTotal + (totalElapsedHours * (2 * additionalHalfRateSTP)) + (2 * additionalHalfRateSTP);
+      if(totalElapsedMinutes > 30 && totalElapsedMinutes < 60) {
+        total = total + (totalElapsedHours * (2 * additionalHalfRateSTP)) + (2 * additionalHalfRateSTP);
       }
     }
-    return grandTotal.toFixed(2);
+    return total.toFixed(2);
   };
+
+  var getEPCosts = function(entryDate, exitDate) {
+    // ECONOMY PARKING
+    var duration = getDuration(entryDate, exitDate);
+    var totalElapsedDays = duration[0];
+    var totalElapsedHours = duration[1];
+    var totalElapsedMinutes = duration[2];
+    var numberOfWeeks = Math.floor(totalElapsedDays / 7);
+
+    var dayRateEP = 9;
+    var hourlyRateEP = 2;
+    var weeklyRateEP = 54;
+    var total = 0;
+
+    // Calculate Rate Per Week
+    total = numberOfWeeks * weeklyRateEP;
+    if ((totalElapsedDays - (numberOfWeeks * 7)) > 5 ) {
+      total = total + weeklyRateEP;
+    }
+    // Calculate Rate Per Day
+    numberOfDays = totalElapsedDays - (numberOfWeeks * 7);
+    if (numberOfDays < 6) {
+    total = total + (numberOfDays * dayRateEP);
+    }
+    
+    // Calculate Rate Per Hour
+    if (totalElapsedHours > 6) {
+      total = total + dayRateEP;
+    } else {
+      total = total + (totalElapsedHours * hourlyRateEP);
+    }
+    
+    // Calculate Rate Per Minute
+    if ((totalElapsedMinutes > 0) && (totalElapsedHours < 7)) {
+      total = total + hourlyRateEP;
+    }
+    
+    return total.toFixed(2);
+  };
+
+  var getLTSCosts = function(entryDate, exitDate) {
+    // LONG TERM SURFACE PARKING
+    var duration = getDuration(entryDate, exitDate);
+    var totalElapsedDays = duration[0];
+    var totalElapsedHours = duration[1];
+    var totalElapsedMinutes = duration[2];
+    var numberOfWeeks = Math.floor(totalElapsedDays / 7);
+    var weeklyRateLTS = 60;
+    var dayRateLTS = 16;
+    var hourlyRateLTS = 2;
+    var total = 0;
+
+    // Calculate Rate Per Week
+    total = numberOfWeeks * weeklyRateLTS;
+    if ((totalElapsedDays - (numberOfWeeks * 7)) > 5 ) {
+      total += weeklyRateLTS;
+    } else {
+      total = numberOfWeeks * weeklyRateLTS;
+    }
+    
+    // Calculate Rate Per Day
+    var numberOfDays = totalElapsedDays - (numberOfWeeks * 7);
+    if (numberOfDays < 6) {
+      total += numberOfDays * dayRateLTS;
+      
+      // Calculate Rate Per Hour
+      if (totalElapsedHours > 7) {
+        total += dayRateLTS;
+      } else {
+        total += totalElapsedHours * hourlyRateLTS;
+      }
+      // Calculate Rate Per Minute
+      if ((totalElapsedMinutes > 0) && (totalElapsedHours < 8)) {
+        total += hourlyRateLTS;
+      }
+    }
+    
+    return total.toFixed(2);
+  };
+
+  var getLTGCosts = function(entryDate, exitDate) {
+    // LONG TERM Garage PARKING
+    var duration = getDuration(entryDate, exitDate);
+    var totalElapsedDays = duration[0];
+    var totalElapsedHours = duration[1];
+    var totalElapsedMinutes = duration[2];
+    var numberOfWeeks = Math.floor(totalElapsedDays / 7);
+    var weeklyRateLTG = 72;
+    var hourlyRateLTG = 2;
+    var dayRateLTG = 12;
+    var total = 0;
+
+    // Calculate Rate Per Week
+    total = numberOfWeeks * weeklyRateLTG;
+    if ((totalElapsedDays - (numberOfWeeks * 7)) > 5 ) {
+      total += weeklyRateLTG;
+    } else {
+      total = numberOfWeeks * weeklyRateLTG;
+    }
+    
+    // Calculate Rate Per Day
+    numberOfDays = totalElapsedDays - (numberOfWeeks * 7);
+    if (numberOfDays < 6) {
+      total += numberOfDays * dayRateLTG;
+        
+      // Calculate Rate Per Hour
+      if (totalElapsedHours > 7) {
+        total += dayRateLTG;
+      } else {
+        total += totalElapsedHours * hourlyRateLTG;
+      }
+      // Calculate Rate Per Minute
+      if ((totalElapsedMinutes > 0) && (totalElapsedHours < 8)) {
+        total += hourlyRateLTG;
+      }
+    }
+
+    return total.toFixed(2);
+  };
+
+  var getVPCosts = function(entryDate, exitDate) {
+    // VALET PARKING
+    var duration = getDuration(entryDate, exitDate);
+    var totalElapsedDays = duration[0];
+    var totalElapsedHours = duration[1];
+    var totalElapsedMinutes = duration[2];
+    var dayRateVP = 18;
+    var upToFiveHourRate = 12;
+    var total = 0;
+
+    // Calculate Rate Per Day
+    total = (Math.floor(totalElapsedDays) * dayRateVP);
+    
+    // Calculate Rate Per Hour
+    if (totalElapsedMinutes > 0) {
+      totalElapsedHours += 1;
+    }
+    if (totalElapsedHours > 5) {
+      total += dayRateVP;
+    }
+    if (totalElapsedHours <= 5 && totalElapsedHours > 0) {
+      total += upToFiveHourRate;
+    }
+    
+    return total.toFixed(2);
+  };
+
 
   </script>
 </head>
@@ -113,8 +259,6 @@
         <td width="326" bgcolor="#00306C" class="BodyCopy">
           <font color="#FFFFFF">
             <input name="EntryTime" type="text" id="EntryTime" value="12:00" size="10">
-            <!--<input name="EntryTimeAMPM" type="radio" value="AM" checked>AM
-            <input name="EntryTimeAMPM" type="radio" value="PM" >PM-->
             <input name="EntryDate" type="text" id="EntryDate" value="YYYY-MM-DD" size="15">
             <a href="javascript:NewCal('EntryDate','yyyy-mm-dd',false,24)"><img src="parkcalc_files/cal.gif" width="16" height="16" border="0" alt="Pick a date"></a>
           </font>
@@ -125,8 +269,6 @@
         <td width="326" bgcolor="#00306C" class="BodyCopy">
           <font color="#FFFFFF">
             <input name="ExitTime" type="text" id="ExitTime" value="12:00" size="10">
-            <!--<input name="ExitTimeAMPM" type="radio" value="AM" checked>AM
-            <input name="ExitTimeAMPM" type="radio" value="PM" >PM -->
             <input name="ExitDate" type="text" id="ExitDate" value="YYYY-MM-DD" size="15">
             <a href="javascript:NewCal('ExitDate','yyyy-mm-dd',false,24)"><img src="parkcalc_files/cal.gif" width="16" height="16" border="0" alt="Pick a date"></a>
           </font>

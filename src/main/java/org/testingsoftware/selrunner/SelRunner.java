@@ -1,5 +1,6 @@
 package org.testingsoftware.selrunner;
 
+import java.io.File;
 import java.net.MalformedURLException;
 import java.util.List;
 import com.google.common.base.Function;
@@ -12,8 +13,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.firefox.FirefoxProfile;
 import org.testingsoftware.selrunner.exceptions.NoWebElementSelectedException;
 
 import fitnesse.slim.converters.ConverterRegistry;
@@ -34,7 +37,20 @@ public class SelRunner {
 	public SelRunner(String browserType) {
 		newDriver(browserType);
 	}
-	
+
+	public SelRunner(String browserType, String profile_path) {
+		if (browserType.equals("Firefox")) {
+			DesiredCapabilities dc = DesiredCapabilities.firefox();
+			File file = new File(profile_path); 
+			FirefoxProfile fp = new FirefoxProfile(file);
+			dc.setCapability(FirefoxDriver.PROFILE, fp);
+			webdriver = new FirefoxDriver(dc);
+			ConverterRegistry.addConverter(By.class, new ByConverter());
+		} else {
+			newDriver(browserType);
+		}
+	}
+		
 	public void clear() {
 		element.clear();
 	}
@@ -139,7 +155,7 @@ public class SelRunner {
     		// I do not have IE available so please let me know if it works fine 
     		webdriver = new InternetExplorerDriver();
     	} else {
-    		webdriver = new FirefoxDriver();
+			webdriver = new FirefoxDriver();
     	}
         ConverterRegistry.addConverter(By.class, new ByConverter());
 	}

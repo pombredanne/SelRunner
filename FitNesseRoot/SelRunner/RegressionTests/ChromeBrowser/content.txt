@@ -1,7 +1,5 @@
-!|script                                     |
-|start       |sel runner      |Todo          |
-|open        |http://localhost:8080/FrontPage|
-|click       |link text:SelRunner            |
-|find element|tag name:body                  |
-|ensure      |contains text   |Demo Samples  |
-|stop                                        |
+!|script                                                                  |
+|start|sel runner                    |Todo                                |
+|open |file://${FITNESSE_ROOTPATH}/FitNesseRoot/files/ajaxTestHarness.html|
+|check|title                         |Delays With Ajax                    |
+|stop                                                                     |

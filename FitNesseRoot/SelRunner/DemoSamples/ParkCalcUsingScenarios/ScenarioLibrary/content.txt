@@ -1,6 +1,6 @@
-!|scenario|Start Parking Calculator                            |
-|open     |http://localhost:8080/files/parkcalcTestHarness.html|
-|check    |title       |ParkCalc Javascript Test Harness       |
+!|scenario|Start Parking Calculator                                               |
+|open     |file://${FITNESSE_ROOTPATH}/FitNesseRoot/files/parkcalcTestHarness.html|
+|check    |title                 |ParkCalc Javascript Test Harness                |
 
 !|scenario     |Select _ Lot|name|
 |find element  |id:Lot           |

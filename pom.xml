@@ -62,9 +62,32 @@
             <argument>-p</argument><argument>${fitnesse.runtime.port}</argument>
           </arguments>
         </configuration>
-
       </plugin>
-    </plugins>
+
+      <plugin>
+    <groupId>org.linuxstuff.maven</groupId>
+    <artifactId>trinidad-maven-plugin</artifactId>
+    <version>20120309</version>
+        <configuration>
+            <testRepositoryUri>${project.basedir}</testRepositoryUri>
+            <breakBuildOnFailure>true</breakBuildOnFailure>
+            <suites>
+                <suite>SelRunner.RegressionTests</suite>
+                <suite>SelRunner.DemoSamples</suite>
+            </suites>
+        </configuration>
+          <executions>
+          <execution>
+            <id>run-tests</id>
+            <phase>test</phase> <!-- append to the test phase. -->
+            <goals>
+              <goal>run-tests</goal>
+            </goals>
+          </execution>
+        </executions>          
+        </plugin>      
+      
+      </plugins>
   </build>
 
 </project>

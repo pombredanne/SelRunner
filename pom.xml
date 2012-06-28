@@ -1,93 +1,79 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>org.selrunner</groupId>
-  <artifactId>selrunner</artifactId>
-  <name>selrunner</name>
-  <version>0.1</version>
-  <url>http://testing-software.org</url>
-  <description>
-    Integrating Fitnesse and Selenium2.
-  </description>
-  <packaging>jar</packaging>
+	<groupId>org.ajaxrunner</groupId>
+	<artifactId>selrunner</artifactId>
+	<version>0.1.0-SNAPSHOT</version>
+	<name>SelRunner</name>
+	<url>http://testing-software.org</url>
+	<description>Integrating Fitnesse and Selenium2</description>
 
-  <properties>
-    <fitnesse.runtime.daysToKeepVersions>0</fitnesse.runtime.daysToKeepVersions>
-    <fitnesse.runtime.port>8080</fitnesse.runtime.port>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
+	<properties>
+		<fitnesse.runtime.daysToKeepVersions>0</fitnesse.runtime.daysToKeepVersions>
+		<fitnesse.runtime.port>8080</fitnesse.runtime.port>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
 
-  <dependencies>
-    <dependency>
-      <groupId>org.fitnesse</groupId>
-      <artifactId>fitnesse</artifactId>
-      <version>20111025</version>
-    </dependency>
-    <dependency>
-      <groupId>org.seleniumhq.selenium</groupId>
-      <artifactId>selenium-java</artifactId>
-      <version>2.24.1</version>
-    </dependency>      
-    <dependency>
-      <groupId>org.seleniumhq.selenium</groupId>
-      <artifactId>selenium-server</artifactId>
-      <version>2.24.1</version>
-    </dependency>  
-  </dependencies>
+	<dependencies>
+		<dependency>
+			<groupId>org.fitnesse</groupId>
+			<artifactId>fitnesse</artifactId>
+			<version>20111025</version>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-java</artifactId>
+			<version>2.24.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-server</artifactId>
+			<version>2.24.1</version>
+		</dependency>
+	</dependencies>
 
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>exec-maven-plugin</artifactId>
-        <version>1.2</version>
-        <executions>
-          <execution>
-            <id>start-maven</id>
-            <goals>
-              <goal>exec</goal>
-            </goals>
-          </execution>
-        </executions>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.2.1</version>
+				<configuration>
+					<mainClass>fitnesseMain.FitNesseMain</mainClass>
+					<arguments>
+						<argument>-d</argument>
+						<argument>${project.basedir}</argument>
+						<argument>-e</argument>
+						<argument>${fitnesse.runtime.daysToKeepVersions}</argument>
+						<argument>-p</argument>
+						<argument>${fitnesse.runtime.port}</argument>
+					</arguments>
+				</configuration>
+			</plugin>
 
-        <configuration>
-          <executable>java</executable>
-          <arguments>
-            <argument>-classpath</argument>
-            <classpath/>
-            <argument>fitnesseMain.FitNesseMain</argument>
-            <argument>-d</argument><argument>${project.basedir}</argument>
-            <argument>-e</argument><argument>${fitnesse.runtime.daysToKeepVersions}</argument>
-            <argument>-p</argument><argument>${fitnesse.runtime.port}</argument>
-          </arguments>
-        </configuration>
-      </plugin>
-
-      <plugin>
-    <groupId>org.linuxstuff.maven</groupId>
-    <artifactId>trinidad-maven-plugin</artifactId>
-    <version>20120309</version>
-        <configuration>
-            <testRepositoryUri>${project.basedir}</testRepositoryUri>
-            <breakBuildOnFailure>true</breakBuildOnFailure>
-            <suites>
-                <suite>SelRunner.RegressionTests</suite>
-                <suite>SelRunner.DemoSamples</suite>
-            </suites>
-        </configuration>
-          <executions>
-          <execution>
-            <id>run-tests</id>
-            <phase>test</phase> <!-- append to the test phase. -->
-            <goals>
-              <goal>run-tests</goal>
-            </goals>
-          </execution>
-        </executions>          
-        </plugin>      
-      
-      </plugins>
-  </build>
-
+			<plugin>
+				<groupId>org.linuxstuff.maven</groupId>
+				<artifactId>trinidad-maven-plugin</artifactId>
+				<version>20120309</version>
+				<configuration>
+					<testRepositoryUri>${project.basedir}</testRepositoryUri>
+					<breakBuildOnFailure>true</breakBuildOnFailure>
+					<suites>
+						<suite>SelRunner.RegressionTests</suite>
+						<suite>SelRunner.DemoSamples</suite>
+					</suites>
+				</configuration>
+				<executions>
+					<execution>
+						<id>run-tests</id>
+						<phase>integration-test</phase>
+						<goals>
+							<goal>run-tests</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 </project>

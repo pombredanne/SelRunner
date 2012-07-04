@@ -14,10 +14,10 @@
 
 
 !2 If you are going to do a lot of variations you want to use the scenarios within decision tables.
-!|Parking from at to at takes and costs                                                                        |
-|Lot type                 |Entry Time|Entry Date     |Exit Time|Exit Date |Time Difference             |Cost   |
-|Economy Parking          |01:23     |2000-02-28/2000|00:34    |2000-03-01|1 DAYS, 23 HOURS, 11 MINUTES|$ 18.00|
-|Economy Parking          |11:30     |2000-02-28/2000|12:34    |2000-02-28|0 DAYS, 1 HOURS, 4 MINUTES  |$ 4.00 |
-|Short-Term Parking       |11:30     |2000-02-28/2000|12:34    |2000-02-28|0 DAYS, 1 HOURS, 4 MINUTES  |$ 3.00 |
-|Long-Term Surface Parking|11:30     |2000-02-28/2000|12:34    |2000-02-28|0 DAYS, 1 HOURS, 4 MINUTES  |$ 4.00 |
-|Valet Parking            |11:30     |2000-02-28/2000|12:34    |2000-02-28|0 DAYS, 1 HOURS, 4 MINUTES  |$ 12.00|
+!|Parking from at to at takes and costs                                                                   |
+|Lot type                 |Entry Time|Entry Date|Exit Time|Exit Date |Time Difference             |Cost   |
+|Economy Parking          |01:23     |2000-02-28|00:34    |2000-03-01|1 DAYS, 23 HOURS, 11 MINUTES|$ 18.00|
+|Economy Parking          |11:30     |2000-02-28|12:34    |2000-02-28|0 DAYS, 1 HOURS, 4 MINUTES  |$ 4.00 |
+|Short-Term Parking       |11:30     |2000-02-28|12:34    |2000-02-28|0 DAYS, 1 HOURS, 4 MINUTES  |$ 3.00 |
+|Long-Term Surface Parking|11:30     |2000-02-28|12:34    |2000-02-28|0 DAYS, 1 HOURS, 4 MINUTES  |$ 4.00 |
+|Valet Parking            |11:30     |2000-02-28|12:34    |2000-02-28|0 DAYS, 1 HOURS, 4 MINUTES  |$ 12.00|

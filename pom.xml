@@ -32,26 +32,9 @@
 			<version>2.24.1</version>
 		</dependency>
 	</dependencies>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>exec-maven-plugin</artifactId>
-				<version>1.2.1</version>
-				<configuration>
-					<mainClass>fitnesseMain.FitNesseMain</mainClass>
-					<arguments>
-						<argument>-d</argument>
-						<argument>${project.basedir}</argument>
-						<argument>-e</argument>
-						<argument>${fitnesse.runtime.daysToKeepVersions}</argument>
-						<argument>-p</argument>
-						<argument>${fitnesse.runtime.port}</argument>
-					</arguments>
-				</configuration>
-			</plugin>
-
+    
+    <build>
+        <plugins>
 			<plugin>
 				<groupId>org.linuxstuff.maven</groupId>
 				<artifactId>trinidad-maven-plugin</artifactId>

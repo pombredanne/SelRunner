@@ -32,9 +32,9 @@
 			<version>2.24.1</version>
 		</dependency>
 	</dependencies>
-    
-    <build>
-        <plugins>
+
+	<build>
+		<plugins>
 			<plugin>
 				<groupId>org.linuxstuff.maven</groupId>
 				<artifactId>trinidad-maven-plugin</artifactId>
@@ -57,6 +57,31 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.8.1</version>
+				<configuration>
+					<show>public</show>
+					<nohelp>true</nohelp>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
+
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.8.1</version>
+				<configuration>
+					<reportOutputDirectory>${project.basedir}/FitNesseRoot/javadoc/</reportOutputDirectory>
+					<destDir>SelRunner</destDir>
+					<stylesheetfile>${project.basedir}/src/main/javadoc/stylesheet.css</stylesheetfile>
+					<show>public</show>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
 </project>

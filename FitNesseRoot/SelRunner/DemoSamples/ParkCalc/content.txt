@@ -1,5 +1,5 @@
 !|script                                                                               |
-|start         |sel runner                                                             |
+|start         |firefox runner                                                             |
 |open          |file://${FITNESSE_ROOTPATH}/FitNesseRoot/files/parkcalcTestHarness.html|
 |check         |title                     |ParkCalc Javascript Test Harness            |
 |find element  |id:Lot                                                                 |

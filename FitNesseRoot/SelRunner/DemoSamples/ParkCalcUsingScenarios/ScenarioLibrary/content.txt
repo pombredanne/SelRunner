@@ -33,7 +33,7 @@
 |ensure      |contains text|@cost|
 
 !|scenario|Parking _ from _ at _ to _ at _ takes _ and costs _|Lot type,Entry Time,Entry Date,Exit Time,Exit Date,Time Difference,Cost|
-|start    |sel runner                                                                                                                 |
+|start    |firefox runner                                                                                                                 |
 |Start Parking Calculator                                                                                                             |
 |Select @LotType Lot                                                                                                                  |
 |Set Entry Time @EntryTime                                                                                                            |

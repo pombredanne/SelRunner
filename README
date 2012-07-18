@@ -1,15 +1,22 @@
 Description
------------
+===========
+
 tbd
 
 Usage
 -----
 
-To execute the whole livecyle including test to create the selrunner-0.1.jar. Put that into the lib folder of your FitNesse server installation. You will find the test report here: <project_home>/target/trinidad. Command to start the build:
+To execute the whole livecycle including test to create the selrunner-0.1.jar. Put that into the lib folder of your FitNesse server installation. 
 mvn package 
 
-You will need to start the FitNesse server in case you are going to work on the testcases in development mode. Start the FitNesse server command:
-mvn exec:exec 
 
-Note: After cloning or downloading the repository you will need to run mvn exec:exec at least once to unpack all the necessary wiki files. After that everything will work as expected (otherwise please let me know).
+Run Tests
+---------
 
+mvn verify
+
+
+Development using eclipse
+-------------------------
+
+To start the fitserver in development / debgug mode use the FitServer_SelRunner.launch in eclipse.

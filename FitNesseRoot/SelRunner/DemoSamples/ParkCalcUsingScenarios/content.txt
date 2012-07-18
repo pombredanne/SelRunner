@@ -1,6 +1,6 @@
 !2 Scenarios help to express the intention of a test and improve maintainability.
 !|script                                            |
-|start                     |firefox runner              |
+|start                     |internet explorer runner              |
 |Start Parking Calculator                           |
 |Select Economy Parking Lot                         |
 |Set Entry Time 01:23                               |

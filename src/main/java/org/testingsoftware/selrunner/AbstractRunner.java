@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
@@ -27,6 +28,7 @@ public abstract class AbstractRunner {
 
 	public AbstractRunner() {
 		ConverterRegistry.addConverter(By.class, new ByConverter());
+		ConverterRegistry.addConverter(Keys.class, new KeysConverter());
 	}
 
     /**
@@ -127,7 +129,13 @@ public abstract class AbstractRunner {
             }
         };
     }
-
+    
+    // TODO solution using converter
+    public void enter() {
+        element.sendKeys(Keys.ENTER);
+    }
+    
+    
     /**
      * Find element specified by selector.
      *
@@ -235,18 +243,20 @@ public abstract class AbstractRunner {
     }
 
     /**
-     * Send single key to current element.
-     * ?? is this still needed, or do we use type ??
+     * Send single key to current element like for example "ENTER", "F1", etc. key.
+     * Keys are defined in org.openqa.selenium.Keys
      *
      * @param  key Key to send.
+     * @see org.openqa.selenium.Keys
      */
-//    public void sendKey(Keys key) {
-//        element.sendKeys(key);
-//    }
+    public void sendKey(Keys key) {
+        element.sendKeys(key);
+    }
 
     /**
      * Send multiple keys.
      *
+     * ?? not sure if this is needed ??
      * @param  keys Keys to send to the current element.
      */
 //    public void sendKeys(CharSequence[] keys) {

@@ -1,5 +1,5 @@
-!|script                               |
-|start |firefox runner                     |
-|open  |file://${FITNESSE_ROOTPATH}/FitNesseRoot/files/ajaxTestHarness.html|
-|check|title|Delays With Ajax|
-|stop|
+!|script                                                                  |
+|start|firefox runner                                                     |
+|open |file://${FITNESSE_ROOTPATH}/FitNesseRoot/files/ajaxTestHarness.html|
+|check|title                       |Delays With Ajax                      |
+|stop                                                                     |

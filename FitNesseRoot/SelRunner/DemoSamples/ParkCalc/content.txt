@@ -1,5 +1,5 @@
 !|script                                                                               |
-|start         |firefox runner                                                             |
+|start         |internet explorer runner                                               |
 |open          |file://${FITNESSE_ROOTPATH}/FitNesseRoot/files/parkcalcTestHarness.html|
 |check         |title                     |ParkCalc Javascript Test Harness            |
 |find element  |id:Lot                                                                 |
@@ -17,7 +17,7 @@
 |clear                                                                                 |
 |type          |2000-03-01                                                             |
 |find element  |id:calculate                                                           |
-|click                                                                                 |
+|sendKey       |ENTER                                                                  |
 |find element  |tag name:body                                                          |
 |ensure        |contains text             |(1 DAYS, 23 HOURS, 11 MINUTES)              |
 |ensure        |contains text             |$ 18.00                                     |

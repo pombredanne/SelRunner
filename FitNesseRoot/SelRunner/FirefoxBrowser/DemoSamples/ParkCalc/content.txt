@@ -1,0 +1,23 @@
+!|script                                                                               |
+|open          |file://${FITNESSE_ROOTPATH}/FitNesseRoot/files/parkcalcTestHarness.html|
+|check         |title                     |ParkCalc Javascript Test Harness            |
+|find element  |id:Lot                                                                 |
+|select by text|Economy Parking                                                        |
+|find element  |id:EntryTime                                                           |
+|clear                                                                                 |
+|type          |01:23                                                                  |
+|find element  |id:EntryDate                                                           |
+|clear                                                                                 |
+|type          |2000-02-28                                                             |
+|find element  |id:ExitTime                                                            |
+|clear                                                                                 |
+|type          |00:34                                                                  |
+|find element  |id:ExitDate                                                            |
+|clear                                                                                 |
+|type          |2000-03-01                                                             |
+|find element  |id:calculate                                                           |
+|sendKey       |ENTER                                                                  |
+|find element  |tag name:body                                                          |
+|ensure        |contains text             |(1 DAYS, 23 HOURS, 11 MINUTES)              |
+|ensure        |contains text             |$ 18.00                                     |
+|stop                                                                                  |

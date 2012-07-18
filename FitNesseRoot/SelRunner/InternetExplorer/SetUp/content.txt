@@ -1,0 +1,5 @@
+|import                       |
+|org.testingsoftware.selrunner|
+
+!|script             |
+|start|internet explorer runner|

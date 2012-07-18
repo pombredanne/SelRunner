@@ -1,5 +1,0 @@
-!|script                                                                  |
-|start|internet explorer runner                                           |
-|open |file://${FITNESSE_ROOTPATH}/FitNesseRoot/files/ajaxTestHarness.html|
-|check|title                       |Delays With Ajax                      |
-

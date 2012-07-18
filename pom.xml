@@ -43,8 +43,8 @@
 					<testRepositoryUri>${project.basedir}</testRepositoryUri>
 					<breakBuildOnFailure>true</breakBuildOnFailure>
 					<suites>
-						<suite>SelRunner.RegressionTests</suite>
-						<suite>SelRunner.DemoSamples</suite>
+						<suite>SelRunner.FirefoxBrowser.RegressionTests</suite>
+						<suite>SelRunner.FirefoxBrowser.DemoSamples</suite>
 					</suites>
 				</configuration>
 				<executions>

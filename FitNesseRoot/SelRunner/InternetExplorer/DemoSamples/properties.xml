@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<properties>
+	<Edit/>
+	<Files/>
+	<Help/>
+	<Properties/>
+	<RecentChanges/>
+	<Refactor/>
+	<Search/>
+	<Suite/>
+	<Suites/>
+	<SymbolicLinks>
+		<ParkCalc>&lt;SelRunner.FirefoxBrowser.DemoSamples.ParkCalc</ParkCalc>
+		<WaitForElement>&lt;SelRunner.FirefoxBrowser.DemoSamples.WaitForElement</WaitForElement>
+		<ParkCalcUsingScenarios>&lt;SelRunner.FirefoxBrowser.DemoSamples.ParkCalcUsingScenarios</ParkCalcUsingScenarios>
+	</SymbolicLinks>
+	<Versions/>
+	<WhereUsed/>
+</properties>

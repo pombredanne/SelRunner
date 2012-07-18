@@ -1,0 +1,6 @@
+!2 Use Firefox Profile for Selenium testing
+
+Article on how to create new Firefox profiles
+http://girliemangalo.wordpress.com/2009/02/05/creating-firefox-profile-for-your-selenium-rc-tests/
+
+!include -m <RegressionTests.StartStop

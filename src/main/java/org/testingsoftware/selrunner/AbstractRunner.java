@@ -130,11 +130,6 @@ public abstract class AbstractRunner {
         };
     }
     
-    // TODO solution using converter
-    public void enter() {
-        element.sendKeys(Keys.ENTER);
-    }
-    
     
     /**
      * Find element specified by selector.
@@ -160,6 +155,16 @@ public abstract class AbstractRunner {
      */
     public List<WebElement> findElements(By by) {
         return webdriver.findElements(by);
+    }
+
+    /**
+     * Return the specified attribute of the current element.
+     * 
+     * @param attr name of the attribute to read.
+     * @return value of the specified attribute.
+     */
+    public String getAttribute(String attr) {
+        return element.getAttribute(attr);
     }
 
     /**
@@ -324,7 +329,7 @@ public abstract class AbstractRunner {
     public void type(String keys) {
         element.sendKeys(keys);
     }
-
+    
     /**
      * Wait for specified number of milliseconds.
      *

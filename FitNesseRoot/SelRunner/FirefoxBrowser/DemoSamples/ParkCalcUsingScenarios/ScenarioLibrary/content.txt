@@ -20,6 +20,14 @@
 |clear                              |
 |type        |@date                 |
 
+!|scenario   |The _ Time is _|type,time            |
+|find element|id:@typeTime                         |
+|check       |get            |value|attribute|@time|
+
+!|scenario   |The _ Date is _|type,date            |
+|find element|id:@typeDate                         |
+|check       |get            |value|attribute|@date|
+
 !|scenario   |Calculate Cost|
 |find element|id:calculate  |
 |sendKey     |ENTER         |
@@ -37,8 +45,12 @@
 |Select @LotType Lot                                                                                                                  |
 |Set Entry Time @EntryTime                                                                                                            |
 |Set Entry Date @EntryDate                                                                                                            |
-|Set Exit Time  @ExitTime                                                                                                             |
+|The Entry Time is @EntryTime                                                                                                         |
+|The Entry Date is @EntryDate                                                                                                         |
+|Set Exit Time @ExitTime                                                                                                              |
 |Set Exit Date @ExitDate                                                                                                              |
+|The Exit Time is @ExitTime                                                                                                           |
+|The Exit Date is @ExitDate                                                                                                           |
 |Calculate Cost                                                                                                                       |
 |The time difference is @TimeDifference                                                                                               |
 |The cost is @Cost                                                                                                                    |

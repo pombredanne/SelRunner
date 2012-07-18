@@ -1,11 +1,14 @@
 package org.testingsoftware.selrunner;
 
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import fitnesse.slim.converters.ConverterRegistry;
 
@@ -16,7 +19,7 @@ import fitnesse.slim.converters.ConverterRegistry;
 public class FirefoxRunner extends AbstractRunner {
 
     /** 
-     * Creates a new FirefoxRunner.
+     * Creates a new local FirefoxRunner.
      */
 	public FirefoxRunner() {
 		super();
@@ -24,7 +27,7 @@ public class FirefoxRunner extends AbstractRunner {
 	}
 	
     /** 
-     * Creates a new FirefoxRunner.
+     * Creates a new local FirefoxRunner.
      * 
      * @param profile_path Path to local firefox profile
      */
@@ -35,7 +38,6 @@ public class FirefoxRunner extends AbstractRunner {
 		FirefoxProfile fp = new FirefoxProfile(file);
 		dc.setCapability(FirefoxDriver.PROFILE, fp);
 		webdriver = new FirefoxDriver(dc);
-		ConverterRegistry.addConverter(By.class, new ByConverter());
 	}
 
 }

@@ -1,5 +1,0 @@
-|import                       |
-|org.testingsoftware.selrunner|
-
-!|script             |
-|start|firefox runner|

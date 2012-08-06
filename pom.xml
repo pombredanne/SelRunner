@@ -31,7 +31,12 @@
 			<artifactId>selenium-server</artifactId>
 			<version>2.24.1</version>
 		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+            <version>1.7.0</version>
+        </dependency>
+    </dependencies>
 
 	<build>
 		<plugins>
@@ -80,7 +85,22 @@
 					</dependency>
 				</dependencies>
 			</plugin>
-		</plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>aspectj-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <configuration>
+                            <source>1.6</source>
+                            <target>1.6</target>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+      	</plugins>
 	</build>
 
 	<reporting>

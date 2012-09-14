@@ -30,7 +30,11 @@
 
 !|scenario   |Calculate Cost|
 |find element|id:calculate  |
-|sendKey     |ENTER         |
+|move mouse                 |
+|click                      |
+{{{
+|sendKey|ENTER|
+}}}
 
 !|scenario   |The time difference is _|difference   |
 |find element|tag name:body                         |

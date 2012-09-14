@@ -15,8 +15,10 @@
 |find element  |id:ExitDate                                                            |
 |clear                                                                                 |
 |type          |2000-03-01                                                             |
+|wait          |1000                                                                   |
 |find element  |id:calculate                                                           |
-|sendKey       |ENTER                                                                  |
+|move mouse                                                                            |
+|click                                                                                 |
 |find element  |tag name:body                                                          |
 |ensure        |contains text             |(1 DAYS, 23 HOURS, 11 MINUTES)              |
 |ensure        |contains text             |$ 18.00                                     |

@@ -24,12 +24,12 @@ If the System under Test makes use of Ajax technoloy you will need means that ma
 |find element    |id:visibilityUnderChange          |
 |ensure          |is displayed                      |
 |find element    |id:makeVisible                    |
-|sendKey         |ENTER                             |
+|click                                              |
 |wait for element|id:visibilityUnderChange|visible  |
 |find element    |id:visibilityUnderChange          |
 |ensure          |is displayed                      |
 |find element    |id:makeInvisible                  |
-|sendKey         |ENTER                             |
+|click                                              |
 |wait for element|id:visibilityUnderChange|invisible|
 |find element    |id:visibilityUnderChange          |
 |reject          |is displayed                      |
@@ -38,7 +38,7 @@ If the System under Test makes use of Ajax technoloy you will need means that ma
 !|script                              |
 |reject          |has element|id:text0|
 |find element    |id:addText          |
-|sendKey         |ENTER               |
+|click                                |
 |wait for element|id:text0   |present |
 |ensure          |has element|id:text0|
 |stop                                 |

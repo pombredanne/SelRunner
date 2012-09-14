@@ -10,8 +10,10 @@ import org.aspectj.lang.annotation.Pointcut;
  
 @Aspect
 public class LoggingAspect {
- 
-    @Pointcut("execution(* AbstractRunner.*(..))")
+    //private static final transient Logger logger = Logger.getLogger(LoggingAspect.class);
+
+    // activate logging for all public methods
+    @Pointcut("execution(public * AbstractRunner.*(..)) && !execution(public * AbstractRunner.*Abort(..))")
     public void logging() {}
  
     @Around("logging()")
@@ -19,10 +21,16 @@ public class LoggingAspect {
         Signature sig = thisJoinPoint.getSignature();
     	Object[] args = thisJoinPoint.getArgs();
     	String location = sig.getName() + "(" + Arrays.toString(args) + ")";
+    	//Utilities util = new Utilities();
+    	//util.format("yyyy.MM.dd kk:mm:ss.SSS");
+    	//String timestamp = util.today();
+    	String timestamp = "ts here";
         try {
+            System.out.println(timestamp + " [" + location + "]");
             return thisJoinPoint.proceed();
         } catch (Exception e) {
-            throw new RuntimeException(location + " failed\n" + e);
+            System.out.println(timestamp + " [" + location + "] failed\n" + e);
+            throw new RuntimeException("[" + location + "] failed\n", e);
         }
     }
 }

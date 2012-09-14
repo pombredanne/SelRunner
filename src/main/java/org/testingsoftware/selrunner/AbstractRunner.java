@@ -7,6 +7,8 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testingsoftware.selrunner.exceptions.NoWebElementSelectedException;
@@ -90,7 +92,7 @@ public abstract class AbstractRunner {
         return new WebDriverWait(webdriver, timeout);
     }
 
-    private Function<WebDriver, Boolean> elementInvisible(final By by) {
+    private Function<WebDriver, Boolean> conditionElementInvisible(final By by) {
         return new Function<WebDriver, Boolean>() {
             public Boolean apply(WebDriver driver) {
                 if (driver.findElements(by).size() == 0) {
@@ -102,7 +104,7 @@ public abstract class AbstractRunner {
         };
     }
 
-    private Function<WebDriver, Boolean> elementLocatedIsNotPresent(final By by) {
+    private Function<WebDriver, Boolean> conditionElementLocatedIsNotPresent(final By by) {
         return new Function<WebDriver, Boolean>() {
             public Boolean apply(WebDriver driver) {
                 return driver.findElements(by).size() == 0;
@@ -110,7 +112,7 @@ public abstract class AbstractRunner {
         };
     }
 
-    private Function<WebDriver, Boolean> elementLocatedIsPresent(final By by) {
+    private Function<WebDriver, Boolean> conditionElementLocatedIsPresent(final By by) {
         return new Function<WebDriver, Boolean>() {
             public Boolean apply(WebDriver driver) {
                 return driver.findElements(by).size() > 0;
@@ -118,7 +120,7 @@ public abstract class AbstractRunner {
         };
     }
 
-    private Function<WebDriver, Boolean> elementVisible(final By by) {
+    private Function<WebDriver, Boolean> conditionElementVisible(final By by) {
         return new Function<WebDriver, Boolean>() {
             public Boolean apply(WebDriver driver) {
                 if (driver.findElements(by).size() == 0) {
@@ -130,6 +132,19 @@ public abstract class AbstractRunner {
         };
     }
     
+    private Function<WebDriver, Boolean> conditionTextPresent(final String text) {
+        return new Function<WebDriver, Boolean>() {
+            public Boolean apply(WebDriver driver) {
+                By by = By.tagName("body");
+                if (driver.findElements(by).size() == 0) {
+                    return false;
+                }
+                WebElement element = driver.findElement(by);
+                return element.getText().contains(text);
+            }
+        };
+    }
+
     
     /**
      * Find element specified by selector.
@@ -355,7 +370,7 @@ public abstract class AbstractRunner {
      * @see click
      */
     public void waitForElementInvisible(By by) {
-        doWait().until(elementInvisible(by));
+        doWait().until(conditionElementInvisible(by));
     }
 
     /**
@@ -365,7 +380,7 @@ public abstract class AbstractRunner {
      * @see click
      */
     public void waitForElementNotPresent(By by) {
-        doWait().until(elementLocatedIsNotPresent(by));
+        doWait().until(conditionElementLocatedIsNotPresent(by));
     }
 
     /**
@@ -375,7 +390,7 @@ public abstract class AbstractRunner {
      * @see click
      */
     public void waitForElementPresent(By by) {
-        doWait().until(elementLocatedIsPresent(by));
+        doWait().until(conditionElementLocatedIsPresent(by));
     }
 
     /**
@@ -385,6 +400,25 @@ public abstract class AbstractRunner {
      * @see click
      */
     public void waitForElementVisible(By by) {
-        doWait().until(elementVisible(by));
+        doWait().until(conditionElementVisible(by));
     }
+    
+    /**
+     * Wait until specified text is present at page body.
+     * 
+     * @param text Text used in wait condition.
+     */
+    public void waitForTextPresent(String text) {
+        doWait().until(conditionTextPresent(text));
+    }
+
+    /**
+     * Move mouse to the current element
+     */    
+    public void moveMouse() {
+        Actions builder = new Actions(webdriver);
+        Action action = builder.moveToElement(element).build();
+        action.perform();
+    }
+    
 }

@@ -1,0 +1,26 @@
+This is the direct usage of the slim web driver without any abstraction. This is not the way to write a proper test and should only be used for a throw-away spike.
+
+!|script       |slim web driver   |${BROWSER}                       |
+|open url      |${PARK_CALC}                                        |
+|check         |title             |Parking Calculator               |
+|use element   |id:Lot                                              |
+|select by text|Economy Parking                                     |
+|use element   |id:EntryTime                                        |
+|clear                                                              |
+|enter text    |01:23                                               |
+|use element   |xpath://input[@name='EntryTimeAMPM' and @value='AM']|
+|set selected                                                       |
+|use element   |id:EntryDate                                        |
+|clear                                                              |
+|enter text    |02/28/2000                                          |
+|use element   |id:ExitTime                                         |
+|clear                                                              |
+|enter text    |12:34                                               |
+|use element   |xpath://input[@name='ExitTimeAMPM' and @value='AM'] |
+|set selected                                                       |
+|use element   |id:ExitDate                                         |
+|clear                                                              |
+|enter text    |03/01/2000                                          |
+|send key      |ENTER                                               |
+|use element   |tag name:body                                       |
+|ensure        |contains text     |(1 Days, 23 Hours, 11 Minutes)   |

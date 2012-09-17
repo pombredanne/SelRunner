@@ -1,0 +1,7 @@
+The ParkCalc tests are inspired by this [[blog post from Markus Gärtner][http://www.shino.de/2010/06/20/parkcalc-automation-getting-started/]].
+
+The actual parking lot costs are defined on http://www.grr.org/ParkingRates.php
+
+!contents
+
+!define PARK_CALC {http://adam.goucher.ca/parkcalc/}

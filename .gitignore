@@ -7,13 +7,13 @@ lib/
 bak/
 env/
 target/
-FitNesseRoot/ErrorLogs/
-FitNesseRoot/FitNesse/
-FitNesseRoot/PageFooter/
-FitNesseRoot/PageHeader/
-FitNesseRoot/RecentChanges/
-FitNesseRoot/files/
-FirefoxProfile/
+test/fitnesse/FitNesseRoot/ErrorLogs/
+test/fitnesse/FitNesseRoot/FitNesse/
+test/fitnesse/FitNesseRoot/RecentChanges/
+test/fitnesse/FitNesseRoot/files/testProgress/
+test/fitnesse/FitNesseRoot/files/testResults/
+test/fitnesse/FitNesseRoot/files/testHistory/
+test/fitnesse/FirefoxProfile/
 
 *.*~
 *~

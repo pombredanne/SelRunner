@@ -1,0 +1,21 @@
+<SlimWebDriver offers support for the page object pattern. You will have to write your own page objects, but <WebDriver's standard [[!-PageFactory-!][http://code.google.com/p/selenium/wiki/PageFactory]] is used to fill the element fields.
+
+It is convenient to additionally have the web driver available as a library fixture, so that you can also use its methods (e.g. ''open url''):
+
+|library                   |
+|slim web driver|${BROWSER}|
+
+|import     |
+|pageobjects|
+
+!|script                                                                                     |
+|open url                         |${FITNESSE_STARTPAGE}                                     |
+|#the following line switches the current table actor to the ''fitnesse startpage'' object   |
+|start                            |FitNesse start page                                       |
+|#the following line switches the current table actor to the ''files'' page object           |
+|go to files page                                                                            |
+|#the following line switches the current table actor to the ''delays with ajax'' page object|
+|go to delays with ajax                                                                      |
+|#now we can interact with the page                                                          |
+|change title to                  |My new title                                              |
+|check                            |get title                  |My new title                  |

@@ -1,0 +1,5 @@
+!|script       |slim web driver|${BROWSER} |
+|open url      |${FILES_DIR_URL}           |
+|check         |title          |=~/.*fil.*/|
+|title contains|fil                        |
+|close window                              |

@@ -1,0 +1,9 @@
+!*> Test system and path definitions
+!define TEST_SYSTEM {slim}
+
+!path ${FITNESSE_ROOTPATH}/bin
+!path ${FITNESSE_ROOTPATH}/lib/*jar
+*!
+
+!contents -R2 -g -p -f -h
+

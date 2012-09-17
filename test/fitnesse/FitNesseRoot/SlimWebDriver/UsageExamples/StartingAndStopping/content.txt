@@ -1,0 +1,33 @@
+The [[!-SlimWebDriver-!][<SlimWebDriver]] is a fixture that calls into a [[!-WebDriver-!][<WebDriver]] instance.
+You can use it in a script table or in a library table.
+
+When you first access a page with ''open url'', it opens the browser window. The ''open url'' method is an alias for [[!-WebDriver's-!][<WebDriver]] ''get()'' method.
+With the ''close window'' command, you can close the current browser window.
+
+The following webdriver types (given as an argument to the slim web driver) can be used:
+
+ * ''firefox''
+ * ''htmlunit''
+ * ''chrome''
+ * ''internetexplorer'' (or ''ie'')
+ * ''android''
+ * ''iphone''
+
+!|script |slim web driver      |${BROWSER}        |
+|open url|http://localhost:${FITNESSE_PORT}/files/|
+|check   |title                |Files: files/     |
+|close window                                     |
+
+When you have not closed the web driver and start a new instance of the fixture, by default it does not open a new browser window. This makes it possible to change to a different fixture in the mean time and back to <SlimWebDriver, without loosing the access to the open window. It also speeds up consecutive execution of multiple separate tests (on different !-FitNesse-! test pages) a lot, if the browser is opened and closed only once.
+
+!|script |slim web driver      |${BROWSER}        |
+|open url|http://localhost:${FITNESSE_PORT}/files/|
+|check   |title                |Files: files/     |
+
+!|script |slim web driver                                |
+|open url|http://www.google.com                          |
+|start   |slim web driver                                |
+|open url|http://localhost:${FITNESSE_PORT}/SlimWebDriver|
+
+You can stop web driver and thus close all browser windows with ''stop web driver''.
+You should put this into the [[!-SuiteTearDown-!][<SlimWebDriver.SuiteTearDown]].

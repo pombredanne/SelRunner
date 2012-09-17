@@ -1,0 +1,70 @@
+Especially when using ajax, you might have to synchronize your tests with the loading of page elements.
+You can use the following methods on <SlimWebDriver.
+
+-|comment|
+|''Wait methods''                                                                                                                   |
+|'''method'''                 |'''argument'''                                                                                       |
+|                                                                                                                                   |
+|wait time                    |time in ms     |''simply wait for the specified time''                                               |
+|set time out                 |time in seconds|''sets the maximum amount of time for the following wait conditions (defaults to 5)''|
+|wait for element to appear   |By locator     |''waits until element is displayed''                                                 |
+|wait for element to disappear|By locator     |''waits until element is absent or invisible''                                       |
+|wait for element present     |By locator     |''waits until element exists in the dom (possibly invisible)''                       |
+|wait for element absent      |By locator     |''waits until element does not exist''                                               |
+|wait for condition           |javascript string that evaluates to a boolean                                                        |
+
+!**> scenarios
+!|scenario  |set delay on page             |milliseconds            |
+|use element|xpath://input[@name="delay" and @value="@milliseconds"]|
+|click                                                              |
+
+!|scenario  |set title|title|
+|use element|id:newTitle    |
+|clear                      |
+|enter text |@title         |
+|use element|id:changeTitle |
+|click                      |
+
+**!
+
+!|script          |slim web driver  |${BROWSER}       |
+|set time out     |10                                 |
+|open url         |${FILES_DIR_URL}delaysWithAjax.html|
+|check            |title            |Delays With Ajax |
+|set delay on page|100                                |
+
+-!|script|
+|#waiting for a certain amount of time|
+|set title  |First new title          |
+|wait time  |200                      |
+|check      |title  |First new title  |
+
+-!|script|
+|#waiting for a javascript condition to become true     |
+|set title         |Second new title                    |
+|wait for condition|document.title == 'Second new title'|
+|check             |title       |Second new title       |
+
+-!|script|
+|#waiting for an element to become invisible, resp. visible|
+|use element       |id:visibilityUnderChange               |
+|ensure            |is displayed                           |
+|use element       |id:makeInvisible                       |
+|click                                                     |
+|wait for element  |id:visibilityUnderChange |to disappear |
+|use element       |id:visibilityUnderChange               |
+|reject            |is displayed                           |
+|use element       |id:makeVisible                         |
+|click                                                     |
+|wait for element  |id:visibilityUnderChange |to appear    |
+|use element       |id:visibilityUnderChange               |
+|ensure            |is displayed                           |
+
+-!|script|
+|#waiting for an element to become present|
+|reject            |has element |id:text0 |
+|use element       |id:addText            |
+|click                                    |
+|wait for element  |id:text0    |present  |
+|ensure            |has element |id:text0 |
+

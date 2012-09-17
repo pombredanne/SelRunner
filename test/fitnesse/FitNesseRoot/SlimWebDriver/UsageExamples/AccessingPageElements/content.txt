@@ -1,0 +1,52 @@
+The ${FILES_DIR_URL} page contains a div with css class sidebar which contains the anchor tag with text !-FrontPage-!
+
+We can use the <WebDriver ''find element'' method and Slim's ''push fixture'' and ''pop fixture'' methods directly.
+The ''By'' locators are written down like this:
+'''method:selector value'''
+
+Where method is one of
+ * class name
+ * css selector
+ * id
+ * link text
+ * partial link text
+ * name
+ * tag name
+ * xpath
+
+!|script           |slim web driver      |${BROWSER}              |
+|open url          |${FILES_DIR_URL}                              |
+|$element=         |find element         |class name:sidebar      |
+|#now we push the webdriver and use the element as the table actor|
+|push fixture                                                     |
+|start             |$element                                      |
+|reject            |has element          |class name:sidebar      |
+|$subElement=      |find element         |tag name:a              |
+|#we do not push the $element, but simply use the subElement      |
+|start             |$subElement                                   |
+|check             |get text             |FrontPage               |
+|pop fixture                                                      |
+|#now we are back on the webdriver                                |
+|check             |title                |Files: files/           |
+|ensure            |has element          |class name:sidebar      |
+|reject            |has element          |class name:aaa          |
+
+But it is easier and more readable to use <SlimWebDriver's special ''use element'' and ''use inner element'' methods.
+It also provides ''has inner element'' and ''number of inner elements''.
+
+!|script               |slim web driver                                   |
+|open url              |${FILES_DIR_URL}                                  |
+|use element           |class name:sidebar                                |
+|#the ''inner'' methods now find elements within the element just selected|
+|ensure                |has inner element           |tag name:a           |
+|check                 |number of inner elements    |tag name:a     |1    |
+|#now we use the a element                                                |
+|use inner element     |tag name:a                                        |
+|#the a element itself has no sub elements a                              |
+|check                 |get text                    |FrontPage            |
+|reject                |has inner element           |tag name:a           |
+|#the web driver's methods are alway available                            |
+|check                 |title                       |Files: files/        |
+|#now using the web driver to find the a sub elements on the whole page   |
+|ensure                |has element                 |tag name:a           |
+

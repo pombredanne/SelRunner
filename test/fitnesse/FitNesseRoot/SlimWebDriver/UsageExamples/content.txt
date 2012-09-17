@@ -1,0 +1,5 @@
+!define BROWSER {firefox}
+!define FITNESSE_STARTPAGE (http://localhost:${FITNESSE_PORT})
+!define FILES_DIR_URL (${FITNESSE_STARTPAGE}/files/)
+
+!contents -R2 -g -p -f -h

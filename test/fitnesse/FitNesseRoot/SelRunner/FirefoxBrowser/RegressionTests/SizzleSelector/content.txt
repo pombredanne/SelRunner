@@ -1,0 +1,25 @@
+!|script                                                                                                   |
+|open                              |file://${FITNESSE_ROOTPATH}/FitNesseRoot/files/parkcalcTestHarness.html|
+|check                             |title                     |ParkCalc Javascript Test Harness            |
+|find element                      |id:Lot                                                                 |
+|select by text                    |Economy Parking                                                        |
+|find element using sizzle selector|input#EntryTime                                                        |
+|clear                                                                                                     |
+|type                              |01:23                                                                  |
+|find element using sizzle selector|#EntryDate                                                             |
+|clear                                                                                                     |
+|type                              |2000-02-28                                                             |
+|find element using sizzle selector|#ExitTime                                                              |
+|clear                                                                                                     |
+|type                              |00:34                                                                  |
+|find element using sizzle selector|#ExitDate                                                              |
+|clear                                                                                                     |
+|type                              |2000-03-01                                                             |
+|wait                              |1000                                                                   |
+|find element using sizzle selector|#calculate                                                             |
+|move mouse                                                                                                |
+|click                                                                                                     |
+|find element                      |tag name:body                                                          |
+|ensure                            |contains text             |(1 DAYS, 23 HOURS, 11 MINUTES)              |
+|ensure                            |contains text             |$ 18.00                                     |
+|stop                                                                                                      |

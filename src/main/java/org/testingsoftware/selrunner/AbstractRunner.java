@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
@@ -168,7 +169,7 @@ public abstract class AbstractRunner {
      * @see click
      * @return List of elements
      */
-    public List<WebElement> findElements(By by) {
+    private List<WebElement> findElements(By by) {
         return webdriver.findElements(by);
     }
 
@@ -420,5 +421,57 @@ public abstract class AbstractRunner {
         Action action = builder.moveToElement(element).build();
         action.perform();
     }
-    
+
+    /**
+     * Find element specified by sizzle selector.
+     * Note: see poltey.com for documentation and more details
+     *
+     * @param sizzle selector to specify the element you are looking for.
+     * @see http://selenium.polteq.com/en/injecting-the-sizzle-css-selector-library/
+     */
+    public boolean findElementUsingSizzleSelector(String sizzle) {
+        injectSizzleIfNeeded();
+        String javascriptExpression = createSizzleSelectorExpression(sizzle);
+		@SuppressWarnings("unchecked")
+		List<WebElement> elements = (List<WebElement>) ((JavascriptExecutor) webdriver).executeScript(javascriptExpression);
+        if (elements.size() > 0) {
+            element = (WebElement) elements.get(0);
+        	return true;
+    	}
+        return false;
+    }
+ 
+    /* not sure if this is needed
+    public List<WebElement> findElementsBySizzle(String using) {
+        injectSizzleIfNeeded();
+        String javascriptExpression = createSizzleSelectorExpression(using);
+        return (List<WebElement>) webdriver.executeScript(javascriptExpression);
+    }*/
+ 
+    private String createSizzleSelectorExpression(String using) {
+        return "return Sizzle(\"" + using + "\")";
+    }
+ 
+    private void injectSizzleIfNeeded() {
+        if (!sizzleLoaded())
+            injectScript("http://localhost:8080/userContent/sizzle.js");
+    }
+ 
+    public Boolean sizzleLoaded() {
+        Boolean loaded;
+        try {
+            loaded = (Boolean) ((JavascriptExecutor) webdriver).executeScript("return Sizzle()!=null");
+        } catch (WebDriverException e) {
+            loaded = false;
+        }
+        return loaded;
+    }
+ 
+    public void injectScript(String url) {
+        ((JavascriptExecutor) webdriver).executeScript(" var headID = document.getElementsByTagName(\"head\")[0];"
+                + "var newScript = document.createElement('script');"
+                + "newScript.type = 'text/javascript';"
+                + "newScript.src = '" + url + "';"
+                + "headID.appendChild(newScript);");
+    }
 }

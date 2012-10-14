@@ -1,11 +1,11 @@
 If the System under Test makes use of Ajax technoloy you will need means that make test execution wait for page elements to become available.
 
 !2 Configure Ajax Test Harness
-!|script                                                                              |
-|set timeout      |10                                                                 |
-|open             |file://${FITNESSE_ROOTPATH}/FitNesseRoot/files/ajaxTestHarness.html|
-|check            |title                       |Delays With Ajax                      |
-|set delay on page|100                                                                |
+!|script                                 |
+|set timeout      |10                    |
+|open             |${AJAX_HARNESS}       |
+|check            |title|Delays With Ajax|
+|set delay on page|100                   |
 
 !2 explicitly waiting for defined amount of time in ms
 !|script                        |

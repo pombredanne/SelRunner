@@ -2,6 +2,9 @@
 
 !define TEST_SYSTEM {slim}
 
+!define PARC_CALC {file://${FITNESSE_ROOTPATH}/FitNesseRoot/files/SelRunner/parkcalcTestHarness.html}
+!define AJAX_HARNESS {file://${FITNESSE_ROOTPATH}/FitNesseRoot/files/SelRunner/ajaxTestHarness.html}
+
 We use the classpath assembled by maven
 !path ${java.class.path}
 *!

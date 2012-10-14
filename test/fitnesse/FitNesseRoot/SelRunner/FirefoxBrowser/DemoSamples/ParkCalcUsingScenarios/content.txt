@@ -1,18 +1,18 @@
 !2 Scenarios help to express the intention of a test and improve maintainability.
-!|script                                            |
-|Start Parking Calculator                           |
-|Select Economy Parking Lot                         |
-|Set Entry Time 01:23                               |
-|Set Entry Date 2000-02-28                          |
-|The Entry Time is 01:23                            |
-|The Entry Date is 2000-02-28                       |
-|Set Exit Time 00:34                                |
-|Set Exit Date 2000-03-01                           |
-|The Exit Time is 00:34                             |
-|The Exit Date is 2000-03-01                        |
-|Calculate Cost                                     |
-|The time difference is 1 DAYS, 23 HOURS, 11 MINUTES|
-|The cost is                |$ 18.00                |
+!|script                                              |
+|Start Parking Calculator                             |
+|Select Economy Parking Lot                           |
+|Set Entry Time 01:23                                 |
+|Set Entry Date 2000-02-28                            |
+|Check Entry Time is 01:23                            |
+|Check Entry Date is 2000-02-28                       |
+|Set Exit Time 00:34                                  |
+|Set Exit Date 2000-03-01                             |
+|Check Exit Time is 00:34                             |
+|Check Exit Date is 2000-03-01                        |
+|Calculate Cost                                       |
+|Check time difference is 1 DAYS, 23 HOURS, 11 MINUTES|
+|Check cost is                |$ 18.00                |
 
 
 

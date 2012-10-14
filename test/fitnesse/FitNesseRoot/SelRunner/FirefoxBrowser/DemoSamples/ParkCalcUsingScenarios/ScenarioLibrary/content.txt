@@ -20,13 +20,13 @@
 |clear                              |
 |type        |@date                 |
 
-!|scenario   |The _ Time is _|type,time            |
-|find element|id:@typeTime                         |
-|check       |get            |value|attribute|@time|
+!|scenario   |Check _ Time is _|type,time            |
+|find element|id:@typeTime                           |
+|check       |get              |value|attribute|@time|
 
-!|scenario   |The _ Date is _|type,date            |
-|find element|id:@typeDate                         |
-|check       |get            |value|attribute|@date|
+!|scenario   |Check _ Date is _|type,date            |
+|find element|id:@typeDate                           |
+|check       |get              |value|attribute|@date|
 
 !|scenario   |Calculate Cost|
 |find element|id:calculate  |
@@ -36,25 +36,25 @@
 |sendKey|ENTER|
 }}}
 
-!|scenario   |The time difference is _|difference   |
-|find element|tag name:body                         |
-|ensure      |contains text           |(@difference)|
+!|scenario   |Check time difference is _|difference   |
+|find element|tag name:body                           |
+|ensure      |contains text             |(@difference)|
 
-!|scenario   |The cost is _|cost |
-|find element|tag name:body      |
-|ensure      |contains text|@cost|
+!|scenario   |Check cost is _|cost |
+|find element|tag name:body        |
+|ensure      |contains text  |@cost|
 
 !|scenario|Parking _ from _ at _ to _ at _ takes _ and costs _|Lot type,Entry Time,Entry Date,Exit Time,Exit Date,Time Difference,Cost|
 |Start Parking Calculator                                                                                                             |
 |Select @LotType Lot                                                                                                                  |
 |Set Entry Time @EntryTime                                                                                                            |
 |Set Entry Date @EntryDate                                                                                                            |
-|The Entry Time is @EntryTime                                                                                                         |
-|The Entry Date is @EntryDate                                                                                                         |
+|Check Entry Time is @EntryTime                                                                                                       |
+|Check Entry Date is @EntryDate                                                                                                       |
 |Set Exit Time @ExitTime                                                                                                              |
 |Set Exit Date @ExitDate                                                                                                              |
-|The Exit Time is @ExitTime                                                                                                           |
-|The Exit Date is @ExitDate                                                                                                           |
+|Check Exit Time is @ExitTime                                                                                                         |
+|Check Exit Date is @ExitDate                                                                                                         |
 |Calculate Cost                                                                                                                       |
-|The time difference is @TimeDifference                                                                                               |
-|The cost is @Cost                                                                                                                    |
+|Check time difference is @TimeDifference                                                                                             |
+|Check cost is @Cost                                                                                                                  |

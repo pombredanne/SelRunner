@@ -1,1 +1,9 @@
-!1 Welcome to SelRunner
+!1 Welcome to FitNesse!
+
+|Projets|
+|[[SelRunner][SelRunner]]|Testsuite of the SelRunner Selenium bridge|
+
+|Documentation|
+|[[!-SelRunner-!][http://files/javadoc/SelRunner/index.html]]|Javadoc API documentation of the SelRunner Selenium bridge|
+|[[!-UserGuide-!][FitNesse.UserGuide]]|FitNesse user guide|
+|[[!-Slim UserGuide-!][FitNesse.UserGuide.SliM]]|Regarding Slim the most useful part of the FitNesse documentation|

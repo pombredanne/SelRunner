@@ -7,6 +7,9 @@ import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
  
 @Aspect
 public class LoggingAspect {
@@ -21,16 +24,19 @@ public class LoggingAspect {
         Signature sig = thisJoinPoint.getSignature();
     	Object[] args = thisJoinPoint.getArgs();
     	String location = sig.getName() + "(" + Arrays.toString(args) + ")";
-    	//Utilities util = new Utilities();
-    	//util.format("yyyy.MM.dd kk:mm:ss.SSS");
-    	//String timestamp = util.today();
-    	String timestamp = "ts here";
+    	String timestamp = getTimestamp();
         try {
-            System.out.println(timestamp + " [" + location + "]");
+            System.out.println(timestamp + " " + location);
             return thisJoinPoint.proceed();
         } catch (Exception e) {
-            System.out.println(timestamp + " [" + location + "] failed\n" + e);
-            throw new RuntimeException("[" + location + "] failed\n", e);
+            System.out.println(timestamp + " " + location + " failed\n" + e);
+            throw new RuntimeException(location + " failed\n", e);
         }
+    }
+    
+    private String getTimestamp() {
+    	DateTime dt = new DateTime();
+    	DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy.MM.dd kk:mm:ss.SSS");
+    	return fmt.print(dt);
     }
 }

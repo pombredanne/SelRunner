@@ -20,3 +20,14 @@ Development using eclipse
 -------------------------
 
 To start the fitserver in development / debgug mode use the FitServer_SelRunner.launch in eclipse.
+
+
+Related Work
+------------
+
+While working on this project I discovered that other people have started similar projects. You might want to look at them, too:
+
+* http://sourceforge.net/projects/webtestfixtures/
+* http://xebia.github.com/Xebium/
+* https://github.com/ggramlich/SlimWebDriver
+* http://amalkov.blogspot.de/2011/03/using-fitnesse-and-selenium-for-testing.html

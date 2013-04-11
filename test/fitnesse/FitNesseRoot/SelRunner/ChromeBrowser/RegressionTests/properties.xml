@@ -9,9 +9,6 @@
 	<Search/>
 	<Suite/>
 	<Suites/>
-	<SymbolicLinks>
-		<StartStop>&lt;SelRunner.FirefoxBrowser.RegressionTests.StartStop</StartStop>
-	</SymbolicLinks>
 	<Versions/>
 	<WhereUsed/>
 </properties>

@@ -1,0 +1,4 @@
+!|script                     |
+|open |${AJAX_HARNESS}       |
+|check|title|Delays With Ajax|
+|stop                        |

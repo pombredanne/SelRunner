@@ -1,0 +1,13 @@
+!|scenario   |set delay on page             |milliseconds            |
+|find element|xpath://input[@name="delay" and @value="@milliseconds"]|
+|sendKey     |SPACE                                                  |
+
+!|scenario   |set title|title|
+|find element|id:newTitle    |
+|clear                       |
+|type        |@title         |
+|find element|id:changeTitle |
+|click|
+{{{
+|sendKey     |ENTER          |
+}}}

@@ -1,5 +1,5 @@
 |import                       |
 |org.testingsoftware.selrunner|
 
-!|script                       |
+!|script            |
 |start|chrome runner|

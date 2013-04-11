@@ -8,10 +8,11 @@
 #   ./scripts/fitnesse_srv.sh start|stop|restart
 #
 
-PATH=$PATH:$RUNTIME/drivers/
 RUNTIME="../tutorial_ci/runtime/fitnesse"
+
 FITNESSE_ROOT="$PWD/test/fitnesse"
 FITNESSE_CMD="java -Xmx200M -DSELENIUM_BROWSER=FirefoxRemoteRunner -DSELENIUM_SERVER=http://localhost:4444/wd/hub -cp $RUNTIME/lib/fitnesse.jar:$RUNTIME/lib/* fitnesseMain.FitNesseMain -d $FITNESSE_ROOT -p 10200 -e 0 -r FitNesseRoot -l $RUNTIME/logs/"
+export PATH=$PATH:$RUNTIME/drivers/
 
 case $1 in
     "start" )

@@ -1,9 +1,11 @@
 !1 Welcome to FitNesse!
 
-|Projets|
-|[[SelRunner][SelRunner]]|Testsuite of the SelRunner Selenium bridge|
+|Projets                                                              |
+|[[SelRunner][SelRunner]]|Testsuite of the SelRunner Selenium bridge  |
+|[[SuperCars][SuperCars]]|Testsuite of the ajaxdemo sample application|
+|[[JukeBox][JukeBox]]    |Testsuite of the jukebox tutorial           |
 
-|Documentation|
-|[[!-SelRunner-!][http://files/javadoc/SelRunner/index.html]]|Javadoc API documentation of the SelRunner Selenium bridge|
-|[[!-UserGuide-!][FitNesse.UserGuide]]|FitNesse user guide|
-|[[!-Slim UserGuide-!][FitNesse.UserGuide.SliM]]|Regarding Slim the most useful part of the FitNesse documentation|
+|Documentation                                                                                                                 |
+|[[!-SelRunner-!][http://files/javadoc/SelRunner/index.html]]|Javadoc API documentation of the SelRunner Selenium bridge       |
+|[[!-UserGuide-!][FitNesse.UserGuide]]                       |FitNesse user guide                                              |
+|[[!-Slim UserGuide-!][FitNesse.UserGuide.SliM]]             |Regarding Slim the most useful part of the FitNesse documentation|

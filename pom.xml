@@ -7,7 +7,12 @@
 	<version>0.1.0-SNAPSHOT</version>
 	<name>SelRunner</name>
 	<url>http://testing-software.org</url>
-	<description>Integrating Fitnesse and Selenium2</description>
+	<description>Integrating FitNesse and Selenium2</description>
+	<scm>
+    	<url>https://github.com/markfink/SelRunner</url>
+    	<connection>scm:git:https://github.com/markfink/SelRunner.git</connection>
+    	<developerConnection>scm:git:ssh://git@github.com/markfink/SelRunner.git</developerConnection>
+	</scm>
 
 	<properties>
 		<fitnesse.runtime.daysToKeepVersions>0</fitnesse.runtime.daysToKeepVersions>
@@ -110,6 +115,11 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+        		<artifactId>maven-release-plugin</artifactId>
+        		<version>2.4.1</version>
+      		</plugin>
       	</plugins>
 	</build>
 

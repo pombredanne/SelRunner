@@ -6,7 +6,8 @@
 	<RecentChanges/>
 	<Refactor/>
 	<Search/>
-	<Suite/>
+	<Suites>NIGHTLY</Suites>
+	<Test/>
 	<Versions/>
 	<WhereUsed/>
 </properties>

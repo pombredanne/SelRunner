@@ -1,0 +1,44 @@
+If the System under Test makes use of Ajax technoloy you will need means that make test execution wait for page elements to become available.
+
+!2 Configure Ajax Test Harness
+!|script                                 |
+|set timeout      |10                    |
+|open             |${AJAX_HARNESS}       |
+|check            |title|Delays With Ajax|
+|set delay on page|100                   |
+
+!2 explicitly waiting for defined amount of time in ms
+!|script                        |
+|set title|First new title      |
+|wait     |200                  |
+|check    |title|First new title|
+
+!2 waiting for a javascript condition to become true
+!|script                                                |
+|set title         |Second new title                    |
+|wait for condition|document.title == 'Second new title'|
+|check             |title       |Second new title       |
+
+!2 waiting for an element to become invisible/visible
+!|script                                            |
+|find element    |id:visibilityUnderChange          |
+|ensure          |is displayed                      |
+|find element    |id:makeVisible                    |
+|click                                              |
+|wait for element|id:visibilityUnderChange|visible  |
+|find element    |id:visibilityUnderChange          |
+|ensure          |is displayed                      |
+|find element    |id:makeInvisible                  |
+|click                                              |
+|wait for element|id:visibilityUnderChange|invisible|
+|find element    |id:visibilityUnderChange          |
+|reject          |is displayed                      |
+
+!2 waiting for an element to become present
+!|script                              |
+|reject          |has element|id:text0|
+|find element    |id:addText          |
+|click                                |
+|wait for element|id:text0   |present |
+|ensure          |has element|id:text0|
+|stop                                 |

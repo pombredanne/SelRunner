@@ -6,6 +6,7 @@
 !define AJAX_HARNESS {file://${FITNESSE_ROOTPATH}/FitNesseRoot/files/SelRunner/ajaxTestHarness.html}
 
 We use the classpath assembled by maven
+!path ${FITNESSE_ROOTPATH}/../../target/selrunner-*.jar
 !path ${java.class.path}
 *!
 

@@ -1,0 +1,61 @@
+!| scenario | start parking calculator |
+| open | ${PARC_CALC} |
+| check | title | ParkCalc Javascript Test Harness |
+
+!| scenario | select _ lot | name |
+| find element | id:Lot |
+| select by text | @name |
+
+!| scenario | page contains | text |
+| find element | tag name:body |
+| check | text | =~/.*@text.*/ |
+
+!| scenario | set _ time _ | type,time |
+| find element | id:@typeTime |
+| clear |
+| type | @time |
+
+!| scenario | set _ date _ | type,date |
+| find element | id:@typeDate |
+| clear |
+| type | @date |
+
+!| scenario | check _ time is _ | type,time |
+| find element | id:@typeTime |
+| check | get | value | attribute | @time |
+
+!| scenario | check _ date is _ | type,date |
+| find element | id:@typeDate |
+| check | get | value | attribute | @date |
+
+!| scenario | calculate cost |
+| find element | id:calculate |
+| move mouse |
+| click |
+
+
+{{{
+|sendKey|ENTER|
+}}}
+!| scenario | check duration is _ | duration |
+| find element | tag name:body |
+| ensure | contains text | (@duration) |
+
+!| scenario | check cost is _ | cost |
+| find element | tag name:body |
+| ensure | contains text | @cost |
+
+!| scenario | calculate _ parking from _ at _ to _ at _ duration _ cost _ | lot type, entry time, entry date, exit time, exit date, duration, cost |
+| start parking calculator |
+| select @lotType lot |
+| set Entry time @entryTime |
+| set Entry date @entryDate |
+| check Entry time is @entryTime |
+| check Entry date is @entryDate |
+| set Exit time @exitTime |
+| set Exit date @exitDate |
+| check Exit time is @exitTime |
+| check Exit date is @exitDate |
+| calculate cost |
+| check duration is @duration |
+| check cost is @cost |

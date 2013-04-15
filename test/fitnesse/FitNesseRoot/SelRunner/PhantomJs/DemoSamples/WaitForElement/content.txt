@@ -1,4 +1,5 @@
-If the System under Test makes use of Ajax technoloy you will need means that make test execution wait for page elements to become available.
+!note The "Testing was interupted and results are incomplete" comment will go away once the driver stops writing debug messages to standard error. We are expecting a fix soon since there are some open issues filed.
+If the System under Test makes use of Javascript technoloy you will need means that make test execution wait for page elements to become available.
 
 !2 Configure Ajax Test Harness
 !|script                                 |

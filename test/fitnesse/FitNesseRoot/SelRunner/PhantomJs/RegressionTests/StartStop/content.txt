@@ -1,3 +1,4 @@
+!note The "Testing was interupted and results are incomplete" comment will go away once the driver stops writing debug messages to standard error. We are expecting a fix soon since there are some open issues filed.
 !|script                     |
 |open |${AJAX_HARNESS}       |
 |check|title|Delays With Ajax|
